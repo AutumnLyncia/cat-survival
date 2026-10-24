@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#18252d">
+  <title>喵野求生 2.2 · 尾巴守夜</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23f3b777' d='M4 4h7v4h10V4h7v22H4z'/%3E%3Cpath fill='%23233338' d='M9 14h4v5H9zm10 0h4v5h-4zm-5 8h4v3h-4z'/%3E%3C/svg%3E">
+  <style>
+:root{color-scheme:dark;--night:#18252d;--panel:#22333a;--edge:#3c4b4e;--cream:#f4edce;--muted:#9dada6;--orange:#f3b777;--mint:#a4c5a4;--ink:#233338;font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif}*{box-sizing:border-box}body{margin:0;background:var(--night);color:var(--cream);font-size:14px}button,a{-webkit-tap-highlight-color:transparent}button{font:inherit;color:inherit;cursor:pointer}button{border:0}button:disabled{cursor:default}button:focus-visible,a:focus-visible,canvas:focus-visible{outline:3px solid var(--orange);outline-offset:4px}button svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:square;stroke-linejoin:miter}button:hover:not(:disabled){filter:brightness(1.08)}button:active:not(:disabled){transform:translateY(1px)}[hidden]{display:none!important}.app-shell{width:min(1440px,calc(100% - 104px));margin:0 auto}.site-header{height:97px;display:flex;align-items:center;border-bottom:1px solid #ffffff10;gap:40px}.brand{display:flex;gap:11px;align-items:center;text-decoration:none;color:var(--cream);font-size:20px;font-weight:800;letter-spacing:1px}.brand-cat{width:42px;height:42px;image-rendering:pixelated}.brand-sub{display:block;font-size:10px;font-weight:400;letter-spacing:2px;color:var(--muted);margin-top:5px}.site-header nav{display:flex;margin-left:auto;align-self:stretch;gap:32px}.nav-button{position:relative;background:none;color:var(--muted);font-size:13px;padding:0 3px}.nav-button.active{color:var(--cream)}.nav-button.active:after{content:"";position:absolute;bottom:-1px;height:3px;left:10px;right:10px;background:var(--orange)}.tiny-dot{display:inline-block;background:var(--orange);height:4px;width:4px;vertical-align:top;margin:4px 0 0 4px}.sound-button{display:flex;gap:8px;align-items:center;background:none;border:1px solid var(--edge);padding:10px 12px;color:var(--muted);font-size:11px;border-radius:5px}.intro{display:flex;align-items:center;justify-content:space-between;padding:34px 0 29px}.intro-kicker{font-size:11px;letter-spacing:2px;color:var(--muted);margin:0 0 12px;display:flex;align-items:center;gap:8px}.intro-kicker>span{width:5px;height:5px;background:var(--orange)}h1{font-size:clamp(23px,2.5vw,37px);line-height:1.4;letter-spacing:1px;margin:0;font-weight:800}.pixel-spark{font-size:25px;color:var(--orange);margin-left:14px;vertical-align:middle}.intro-note{font-size:12px;line-height:1.9;color:var(--muted);margin:0;text-align:right}.play-layout{display:grid;grid-template-columns:minmax(0,1fr) 302px;gap:27px;align-items:start}.game-panel{border:1px solid #546359;border-radius:8px;overflow:hidden;background:#1d3031;box-shadow:0 12px 28px #0b181a35}.game-topbar{height:48px;background:#263a39;display:flex;align-items:center;justify-content:space-between;padding:0 17px;font-size:12px}.game-topbar>span{display:flex;align-items:center;gap:9px}.live-dot{width:6px;height:6px;background:var(--mint);box-shadow:0 0 8px #a4c5a433}.region-sub{color:#92a99b;font-size:10px;margin-left:3px}.topbar-actions{display:flex;align-items:center;gap:10px}.game-mode{color:#b9c5ae;font-size:10px;padding-right:8px;border-right:1px solid #64755a55}.icon-button{background:none;display:grid;place-items:center;padding:3px;color:#b8c8bc}.icon-button:disabled{opacity:.3}.icon-button svg{height:15px;width:15px}.game-viewport{position:relative;aspect-ratio:8/5;isolation:isolate;background:#435d48;overflow:hidden}#gameCanvas{width:100%;height:100%;display:block;image-rendering:pixelated;touch-action:none;outline-offset:-3px}.hud{position:absolute;top:18px;left:19px;right:19px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;pointer-events:none}.player-hud{display:flex;align-items:center;background:#172f2bd9;padding:8px 11px 8px 5px;border:1px solid #889d6666;gap:3px;min-width:157px;box-shadow:3px 3px #10261e55}.player-hud canvas{width:40px;height:40px;image-rendering:pixelated}.player-hud>div{flex:1}.hud-name{display:flex;justify-content:space-between;gap:23px;font-size:11px}.hud-name>span{font-family:Consolas,monospace;font-size:10px;color:#d9c57e}.health-track{height:6px;background:#6c4841;margin-top:5px;box-shadow:0 0 0 1px #112e26}.health-track>span{display:block;height:100%;background:#b6ce80;width:100%;transition:width .12s linear}.health-value{display:block;font-size:8px;text-align:right;font-family:Consolas,monospace;color:#b4c4a6;margin-top:3px}.timer-hud{text-align:center;background:#17332ad1;padding:8px 18px 7px;border:1px solid #8da07944}.timer-hud>span{font-size:8px;letter-spacing:1px;color:#c2cdb2;display:block;margin-bottom:2px}.timer-hud>b{font-size:24px;letter-spacing:2px;font-family:Consolas,monospace;font-weight:700;line-height:1}.fish-hud{display:flex;align-items:center;gap:7px;background:#17332ad9;border:1px solid #8da07944;padding:10px;font-size:12px}.fish-hud>span:last-child{font-size:9px;color:#b5c3a9}.fish-symbol{color:var(--orange)}.world-label{position:absolute;right:22px;bottom:22px;font-size:10px;letter-spacing:1px;color:#ecedc9bb;pointer-events:none;text-shadow:1px 2px #273d37}.lobby-panel{position:absolute;left:33px;bottom:37px;display:flex;flex-direction:column;align-items:flex-start;max-width:280px}.lobby-copy{padding:17px 22px 17px 18px;background:#19372eeb;border-left:3px solid #b7c991;margin-bottom:18px;box-shadow:4px 4px #132e2566}.small-tag{color:#bccc9d;font-size:9px;letter-spacing:1px}.lobby-copy h2{font-size:24px;letter-spacing:2px;margin:7px 0 9px}.lobby-copy p{font-size:11px;line-height:1.85;color:#c7d2b6;margin:0}.primary-button{background:var(--orange);color:#28352f;display:flex;align-items:center;justify-content:center;gap:25px;font-weight:800;padding:14px 25px;border:1px solid #ffd99b;box-shadow:4px 4px #704f37;border-radius:1px;font-size:14px}.primary-button svg{width:18px;height:18px}.start-note{font-size:9px;color:#e5e8c3;margin-top:14px;text-shadow:1px 1px #1c3b31}.experience-track{position:absolute;bottom:0;height:4px;background:#132d2ba0;width:100%;pointer-events:none}.experience-track span{display:block;height:100%;background:#e2c97b;transition:width .2s;width:0}.game-controlbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 16px;background:#223735;min-height:61px}.key-help{display:flex;gap:17px;align-items:center;color:#a5b8ac;font-size:9px}.key-help>span{white-space:nowrap}kbd{font-family:inherit;background:#334743;border:1px solid #576a5b;border-bottom:2px solid #576a5b;border-radius:3px;padding:2px 5px;display:inline-block;font-size:9px;color:#d1d7bd}.skill-button{display:flex;gap:8px;align-items:center;background:#384b41;padding:8px 10px;border:1px solid #6b7657;color:#ecdeb3;font-size:10px;white-space:nowrap}.skill-dot{color:var(--orange);font-size:17px;line-height:1}#skillCooldown{color:#b8c790;font-size:9px;padding-left:5px;border-left:1px solid #77876866}.skill-button:disabled{opacity:.65}.section-heading{display:flex;align-items:center;justify-content:space-between;gap:10px}.section-heading h2{font-size:17px;margin:0;font-weight:700}.section-heading>span{color:var(--muted);font-size:10px}.aside-note{font-size:10px;color:var(--muted);margin:9px 0 18px}.cat-list{display:flex;flex-direction:column;gap:9px}.cat-card{display:flex;text-align:left;align-items:center;gap:12px;position:relative;background:#24353b;border:1px solid #40504e;padding:12px 13px;min-height:88px;border-radius:5px;width:100%;transition:border-color .15s,background .15s}.cat-card.selected{background:#3b4239;border-color:#d7b884;box-shadow:inset 3px 0 #e4be85}.portrait-frame{display:block;width:57px;height:57px;flex-shrink:0;border-radius:3px;image-rendering:pixelated;position:relative;overflow:hidden}.portrait-frame.orange{background:#786844}.portrait-frame.black{background:#405361}.portrait-frame.white{background:#626e62}.portrait-frame canvas{width:100%;height:100%;image-rendering:pixelated}.cat-copy{display:flex;flex-direction:column;gap:6px}.cat-title{font-size:15px;font-weight:700}.cat-title>span{font-size:9px;color:#c0c8b9;font-weight:400;margin-left:6px}.cat-description{color:#a9b8ac;font-size:10px}.cat-trait{font-size:9px;color:#d2c291;display:flex;align-items:center;gap:5px}.cat-trait i{width:3px;height:3px;background:#d2c291}.cat-card[data-select=black] .cat-trait{color:#a7c5d4}.cat-card[data-select=white] .cat-trait{color:#b6ceaa}.select-mark{display:none;position:absolute;right:0;top:0;color:#293931;background:#dfbd85;font-size:10px;padding:1px 4px;border-radius:0 3px 0 3px}.selected .select-mark{display:block}.cat-card:disabled:not(.selected){opacity:.5}.ability-detail{padding:17px 0 18px;border-bottom:1px solid #ffffff12}.ability-title{display:flex;align-items:center;gap:10px}.ability-icon{height:33px;width:33px;display:grid;place-items:center;color:var(--orange);background:#374540;border:1px solid #6f7055;font-size:23px}.detail-label{font-size:8px;color:var(--muted)}.ability-title h3{font-size:12px;margin:3px 0 0}.ability-title kbd{margin-left:auto}.ability-detail p{font-size:10px;line-height:1.8;color:var(--muted);margin:11px 0}.stats{display:flex;gap:13px;justify-content:space-between}.stats>div{display:flex;gap:7px;align-items:center;color:#b3bdac;font-size:9px}.stat-blocks{display:flex;gap:3px}.stat-blocks>i{height:9px;width:5px;background:#3d5050}.stat-blocks>i.filled{background:#d7bd89}.route{padding-top:17px}.route h3{font-size:12px;margin:0}.route ol{padding:0;margin:12px 0 0;list-style:none}.route li{display:flex;align-items:center;gap:12px;position:relative;padding:7px 0;color:#93a69e;font-size:11px}.route li:not(:last-child):after{content:"";position:absolute;top:26px;left:5px;height:27px;border-left:1px dashed #5a7261}.route li.current{color:#e5cd9c}.route li.done{color:#a8c897}.route-dot{width:11px;height:11px;border:2px solid #5a7261;background:var(--night);z-index:1}.current .route-dot{background:var(--orange);border-color:var(--orange);box-shadow:0 0 0 3px #d1b17c1a}.done .route-dot{background:#a8c897}.route small{display:block;font-size:9px;color:#82978b;margin-top:4px}.route li b{margin-left:auto;font:11px Consolas,monospace;color:#648076}.tips-row{display:grid;grid-template-columns:repeat(3,1fr);max-width:calc(100% - 329px);padding:23px 0 25px;gap:20px}.tips-row>div{display:flex;align-items:center;gap:12px}.tip-icon{font-size:25px;color:#b4c59c;width:28px;text-align:center}.tips-row p{display:flex;flex-direction:column;gap:6px;margin:0}.tips-row b{font-size:11px;font-weight:600;color:#cbd2ba}.tips-row p>span{font-size:9px;color:#849a8f}footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid #ffffff12;padding:21px 0 25px;color:#849a8f;font-size:10px;gap:15px}.footer-paw{color:#c6b28b;margin-right:6px}.version{color:#667d73;font-size:9px}.stage-toast{position:absolute;top:100px;left:50%;transform:translateX(-50%);background:#193630ec;border:1px solid #cfcd87;padding:10px 18px;color:#f1e6b2;font-size:12px;text-align:center;pointer-events:none;opacity:0;transition:opacity .2s;max-width:80%;width:max-content}.stage-toast.visible{opacity:1}.boss-hud{position:absolute;top:93px;width:46%;left:27%;pointer-events:none}.boss-hud>div:first-child{display:flex;justify-content:space-between;color:#f1dcbb;font-size:9px;background:#3b3435c9;padding:5px}.boss-track{height:7px;background:#382d37;border:1px solid #e1aa87}.boss-track>span{height:100%;background:#d58671;display:block}.game-overlay{position:absolute;inset:0;background:#102a28cc;display:flex;align-items:center;justify-content:center;padding:24px;z-index:5;backdrop-filter:blur(3px)}.overlay-card{border:1px solid #889a72;background:#213b32;padding:25px;text-align:center;width:min(100%,540px);box-shadow:6px 6px #0f2828a6}.overlay-card .overlay-icon{font-size:30px;color:var(--orange);margin:0 0 8px}.overlay-card h2{font-size:24px;letter-spacing:2px;margin:0 0 10px}.overlay-card>p{font-size:12px;color:#c3cfb7;line-height:1.8;margin:10px 0 18px}.overlay-card .primary-button{margin:0 auto;padding:12px 22px;font-size:13px}.secondary-button{background:transparent;border:1px solid #6b806b;padding:10px 18px;font-size:11px;color:#c6d2ba}.overlay-actions{display:flex;align-items:center;justify-content:center;gap:13px}.overlay-actions .primary-button{margin:0}.upgrade-options{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.upgrade-option{padding:14px 9px;border:1px solid #748668;background:#354b39;display:flex;flex-direction:column;align-items:center;gap:10px}.upgrade-option>span{font-size:25px;color:var(--orange)}.upgrade-option b{font-size:12px}.upgrade-option small{font-size:10px;line-height:1.6;color:#d0d5b4}.upgrade-option:focus-visible{outline-offset:0}.result-stats{display:flex;justify-content:center;gap:24px;margin:20px 0}.result-stats>div{display:flex;flex-direction:column;gap:4px;color:#a6b69b;font-size:10px}.result-stats b{font-size:25px;color:#f2d9a5;font-family:Consolas,monospace}.touch-controls{position:absolute;bottom:25px;left:23px;right:23px;display:flex;justify-content:space-between;align-items:center;pointer-events:none}#joystick{width:88px;height:88px;border:2px solid #dee1b759;background:#1a35326b;border-radius:50%;display:grid;place-items:center;pointer-events:auto;touch-action:none}#joystickKnob{width:36px;height:36px;border:1px solid #f8e9b197;background:#ded8a44f;border-radius:50%;pointer-events:none}#touchSkill{width:64px;height:64px;border:2px solid #f3d3948c;background:#39473fbb;border-radius:50%;color:#f3d394;font-size:13px;pointer-events:auto;touch-action:none}.game-panel:fullscreen{width:100vw;height:100vh;display:flex;flex-direction:column;border:0;border-radius:0;align-items:center;background:#18252d}.game-panel:fullscreen .game-topbar,.game-panel:fullscreen .game-controlbar{width:min(100%,1440px)}.game-panel:fullscreen .game-viewport{height:calc(100vh - 110px);width:auto;max-width:100%;flex:0 1 auto}dialog{background:#243a37;border:1px solid #889879;padding:32px;color:var(--cream);max-width:620px;width:calc(100% - 32px);box-shadow:8px 8px #0d2020;max-height:85vh}dialog::backdrop{background:#0d1c23c9;backdrop-filter:blur(5px)}.dialog-close{position:absolute;right:12px;top:7px;background:none;font-size:26px;color:#b7c3ae}dialog h2{font-size:24px;margin:0 0 18px}dialog h3{font-size:14px;margin:22px 0 8px}dialog p,dialog li{font-size:12px;line-height:1.85;color:#bfccb6}dialog ol,dialog ul{padding-left:22px}dialog kbd{font-size:11px}.journal-entry{border-top:1px solid #ffffff1c;padding:15px 0;display:flex;align-items:center;gap:15px}.journal-entry b{font-size:12px}.journal-entry small{display:block;color:#95ae9d;font-size:10px;margin-top:5px}.journal-entry>span:last-child{margin-left:auto;color:var(--orange);font-size:14px}.save-note{font-size:10px!important;color:#90a38f!important}.game-viewport.playing .world-label{display:none}.is-touch .key-help{display:none}.is-touch .game-controlbar:before{content:"左侧摇杆移动 · 右侧释放技能";color:#a5b8ac;font-size:10px}
+@media(min-width:1600px){.app-shell{width:min(1480px,calc(100% - 128px))}.play-layout{grid-template-columns:minmax(0,1fr) 320px;gap:32px}.cat-card{min-height:97px}.tips-row{max-width:calc(100% - 352px)}}
+@media(max-width:1200px){.app-shell{width:calc(100% - 56px)}.play-layout{grid-template-columns:minmax(0,1fr) 276px;gap:20px}.cat-card{padding:10px;gap:8px;min-height:83px}.portrait-frame{width:49px;height:49px}.cat-title>span{margin-left:4px;font-size:8px}.key-help{gap:8px;font-size:8px}.key-help>span:last-child{display:none}.game-controlbar{padding:12px}.lobby-panel{bottom:28px;left:25px}.lobby-copy{padding:12px 16px}.lobby-copy h2{font-size:21px}.lobby-copy p{font-size:10px}.primary-button{padding:12px 22px}.hud{top:14px;left:14px;right:14px}.player-hud{min-width:137px;padding:5px}.timer-hud>b{font-size:21px}.tips-row{max-width:calc(100% - 296px);gap:10px}.tips-row>div{gap:7px}.tips-row b{font-size:10px}.tips-row p>span{font-size:8px}.tips-row .tip-icon{font-size:20px}.ability-detail{padding:14px 0}.route{padding-top:13px}.stats{gap:6px}.stat-blocks{gap:2px}}
+@media(max-width:980px){.app-shell{width:calc(100% - 40px)}.site-header{height:80px;gap:22px}.site-header nav{gap:20px}.intro{padding:26px 0}.play-layout{grid-template-columns:1fr}.companion-panel{display:grid;grid-template-columns:1fr 1fr;gap:0 25px}.companion-panel>.section-heading,.companion-panel>.aside-note,.cat-list{grid-column:1/-1}.cat-list{flex-direction:row;gap:12px}.cat-card{flex:1;padding:12px 9px;gap:7px}.cat-title{font-size:14px}.cat-title>span{display:none}.cat-description{font-size:9px}.cat-trait{font-size:8px}.ability-detail{border-bottom:0;padding:20px 0 10px}.route{padding-top:20px}.route ol{display:flex;gap:15px;margin:14px 0}.route li{flex:1;display:block}.route-dot{display:block;margin-bottom:10px}.route li:not(:last-child):after{left:17px;top:12px;width:calc(100% - 16px);height:0;border-top:1px dashed #5a7261}.route li b{display:none}.route small{font-size:8px}.tips-row{max-width:none;padding:22px 0;gap:20px}.tips-row b{font-size:11px}.tips-row p>span{font-size:9px}.key-help>span:last-child{display:inline}.game-controlbar{padding:14px 18px}.key-help{gap:22px;font-size:10px}.lobby-panel{bottom:40px;left:35px}.lobby-copy{padding:18px 23px}.lobby-copy h2{font-size:27px}.lobby-copy p{font-size:12px}.primary-button{padding:15px 28px}.hud{top:20px;left:20px;right:20px}.player-hud{min-width:160px;padding:8px}.timer-hud>b{font-size:25px}}
+@media(max-width:600px){.app-shell{width:calc(100% - 28px)}.site-header{height:70px;gap:12px}.brand{font-size:17px;gap:5px}.brand-cat{width:32px;height:32px}.brand-sub{font-size:8px;letter-spacing:1px}.site-header nav{gap:15px}.nav-button{font-size:11px;padding:0}.nav-button:first-child{display:none}.sound-button{padding:7px}.sound-button span{display:none}.sound-button svg{width:16px;height:16px}.intro{padding:23px 0 20px}.intro-kicker{font-size:9px;letter-spacing:1px;margin-bottom:8px}h1{font-size:23px;letter-spacing:0}.pixel-spark{font-size:18px;margin-left:8px}.intro-note{display:none}.game-topbar{padding:0 11px;height:39px;font-size:10px}.region-sub{display:none}.topbar-actions{gap:9px}.game-mode{font-size:8px}.game-viewport{aspect-ratio:4/5}#gameCanvas{object-fit:cover}.hud{top:12px;left:10px;right:10px;gap:6px}.player-hud{min-width:125px;padding:5px 6px 5px 2px;gap:0}.player-hud canvas{width:31px;height:31px}.hud-name{font-size:9px;gap:13px}.hud-name>span{font-size:9px}.health-value{font-size:7px}.timer-hud{padding:7px 10px}.timer-hud>span{font-size:7px}.timer-hud>b{font-size:19px}.fish-hud{font-size:10px;padding:8px 7px;gap:5px}.fish-hud>span:last-child{display:none}.lobby-panel{left:22px;bottom:39px;max-width:80%}.lobby-copy{padding:16px 19px;margin-bottom:18px}.lobby-copy h2{font-size:24px}.lobby-copy p{font-size:11px}.start-note{font-size:9px}.world-label{bottom:17px;right:14px;font-size:8px}.game-controlbar{padding:11px;min-height:53px}.key-help{font-size:8px;gap:9px}.key-help>span:last-child{display:none}.key-help kbd{font-size:7px;padding:2px 3px}.skill-button{font-size:9px;padding:7px 8px}.skill-dot{font-size:14px}#skillCooldown{font-size:8px}.play-layout{gap:25px}.section-heading h2{font-size:16px}.cat-list{gap:7px}.cat-card{flex-direction:column;text-align:center;padding:12px 5px;gap:7px;min-height:147px}.portrait-frame{width:55px;height:55px}.cat-copy{gap:5px}.cat-title{font-size:13px}.cat-description{display:none}.cat-trait{font-size:8px;display:block;line-height:1.6}.cat-trait i{display:none}.cat-card.selected{box-shadow:inset 0 -3px #e4be85}.companion-panel{grid-template-columns:1fr}.ability-detail,.route{grid-column:1/-1}.ability-detail{padding:18px 0;border-bottom:1px solid #ffffff12}.ability-detail p{font-size:11px}.stats{max-width:300px}.stats>div{font-size:10px}.stat-blocks>i{width:7px;height:10px}.route{padding-top:17px}.route ol{margin-bottom:0}.route li{font-size:12px}.route small{font-size:9px}.tips-row{grid-template-columns:1fr;gap:17px;padding:27px 0}.tips-row b{font-size:11px}.tips-row p>span{font-size:10px}.tips-row>div{gap:12px}.tips-row .tip-icon{font-size:23px}footer{flex-wrap:wrap;font-size:9px;padding:18px 0 22px;gap:12px}#bestRecord{order:3;flex-basis:100%;font-size:8px}.version{font-size:8px}.game-overlay{padding:14px}.overlay-card{padding:22px 14px}.overlay-card h2{font-size:22px}.overlay-card>p{font-size:11px}.upgrade-options{grid-template-columns:1fr;gap:8px}.upgrade-option{flex-direction:row;gap:12px;padding:13px}.upgrade-option>span{font-size:22px}.upgrade-option small{margin-left:auto;font-size:9px}.upgrade-option b{font-size:11px}.overlay-actions{gap:10px}.overlay-actions .primary-button{font-size:11px;padding:11px 17px}.secondary-button{font-size:10px;padding:10px 14px}.boss-hud{top:82px;left:15%;width:70%}.stage-toast{top:91px;font-size:10px;padding:9px 14px}dialog{padding:27px 22px}.game-panel:fullscreen .game-viewport{aspect-ratio:4/5;width:100%;height:auto;flex:1}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+.boss-active .stage-toast{top:136px}@media(max-width:600px){.boss-active .stage-toast{top:120px}}
+
+</style><style>
+/* Gameplay information replaces character selection during an expedition. */
+.in-run .cat-list,.in-run .route{display:none}.in-run .ability-detail{border-bottom:0}.intro h1{font-size:clamp(23px,2.45vw,35px)}.intro-kicker{letter-spacing:1px}.mission-strip{display:flex;align-items:center;gap:12px;padding:12px 16px;background:#2d423a;border-top:1px solid #78916e55;color:#ccd3b2;font-size:10px}.mission-strip b{font-weight:500;flex:1;line-height:1.6}.phase-badge{color:#edd197;white-space:nowrap;border:1px solid #9d96604d;background:#554f352e;padding:5px 8px}.phase-badge.night{color:#bfccea;border-color:#7c97b070;background:#27364f}.mission-strip>span:last-child{font-size:9px;color:#a6c3a3;white-space:nowrap}.action-bar{display:flex;gap:7px;align-items:center}.action-button{font-size:10px;border:1px solid #607560;background:#34493c;padding:9px 8px;white-space:nowrap;color:#e1d9b4}.action-button kbd{margin-right:4px}.action-button small{font-size:8px;margin-left:4px;color:#b7cf9e}.action-button:disabled{opacity:.45}.game-controlbar .key-help{gap:9px}.game-controlbar .key-help>span:last-child{display:inline}.camp-status{padding:16px 15px;background:#294137;border:1px solid #59745b;margin-bottom:18px;border-radius:4px}.camp-status>div:first-child{display:flex;justify-content:space-between;align-items:center;font-size:12px}.camp-status b{color:#d6d6aa;font:12px Consolas,monospace}.camp-health-track{height:8px;margin-top:12px;background:#4a493a;box-shadow:0 0 0 1px #183027}.camp-health-track span{height:100%;display:block;width:100%;background:#b8c67b;transition:width .15s}.camp-status p{font-size:9px;color:#a1b59b;margin:10px 0 0}.wood-heading{display:flex;align-items:center;justify-content:space-between}.wood-heading h3{font-size:14px;margin:0}.wood-heading>span{font-size:11px;color:#b8c1a6}.wood-heading b{font-size:20px;color:#efd0a0;font-family:Consolas,monospace;margin-left:5px}.workshop-note{font-size:10px;color:#a2b099;line-height:1.7;margin:7px 0 12px}.build-list{display:flex;flex-direction:column;gap:8px}.build-card{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px;background:#283c39;border:1px solid #4e6558;border-radius:4px}.build-card.selected{border-color:#dac38b;background:#414b38;box-shadow:inset 3px 0 #d7bf88}.build-card>span{color:#ead19d;font-size:26px;width:28px;text-align:center}.build-card>div{flex:1}.build-card b{font-size:12px;font-weight:600}.build-card small{display:block;color:#aaba9d;font-size:9px;margin-top:5px}.build-card kbd{font-size:8px;margin-left:3px}.build-card em{font-style:normal;font-size:10px;color:#d9c18f}.build-card:disabled{opacity:.55}.mission-checks{padding:15px 0 0}.mission-checks h3{font-size:12px;margin:0 0 12px}.mission-checks p{font-size:10px;color:#b3c8a3;margin:9px 0}.interaction-prompt,.yarn-status{position:absolute;left:50%;transform:translateX(-50%);padding:9px 14px;background:#193b30ed;border:1px solid #e2c995;color:#f3dfb7;text-align:center;font-size:11px;max-width:90%;width:max-content;pointer-events:none;box-shadow:3px 3px #162c2655}.interaction-prompt{bottom:18px}.yarn-status{bottom:58px;color:#fff0ae;background:#4b492de6;border-color:#e0d78d}.cache-options{grid-template-columns:1fr 1fr}.cache-options .upgrade-option:last-child{border-color:#a78383;background:#494339}.touch-action-grid{display:grid;grid-template-columns:repeat(2,54px);gap:8px;pointer-events:auto}.touch-action-grid button{width:54px!important;height:54px!important;border:1px solid #e2cf9c88!important;background:#294739d9!important;border-radius:50%;font-size:11px!important;color:#f1d2a0;touch-action:none}.touch-action-grid button:disabled{color:#bcc29c;opacity:.65}.touch-action-grid #touchYarn{background:#605738d9!important}.touch-action-grid #touchInteract{background:#366152df!important}#adventureSidebar{grid-column:1/-1}.in-run .aside-note{line-height:1.8}.in-run .section-heading>span{font-size:0}.in-run .section-heading>span:after{content:'守住三夜';font-size:10px}.in-run .stage-toast{max-width:85%}.lobby-copy{max-width:310px}.lobby-copy p{line-height:1.9}
+@media(max-width:1200px){.action-button{padding:8px 6px;font-size:9px}.action-button kbd{font-size:8px;padding:2px 3px}.action-button small{display:none}.game-controlbar{gap:8px}.game-controlbar .key-help{font-size:8px}.mission-strip{padding:9px 11px;font-size:9px;gap:9px}.mission-strip>span:last-child{font-size:8px}.phase-badge{padding:5px}.build-card{padding:10px}.build-card>span{font-size:22px}.build-card b{font-size:11px}.build-card small{font-size:8px}}
+@media(max-width:980px){.in-run #adventureSidebar{display:grid;grid-template-columns:1fr 1fr;gap:0 22px}.camp-status{grid-column:1;margin-bottom:0;align-self:start}.wood-heading,.workshop-note,.build-list{grid-column:2}.wood-heading{grid-row:1}.workshop-note{grid-row:2}.build-list{grid-row:3/5}.mission-checks{grid-column:1;grid-row:2/5}.in-run .ability-detail{grid-column:1/-1}.game-controlbar .key-help{font-size:9px}.action-button{font-size:10px}.action-button small{display:inline}.companion-panel .section-heading h2{line-height:1.5}}
+@media(max-width:600px){.intro h1{font-size:23px;max-width:330px;line-height:1.5}.intro-kicker{font-size:8px;letter-spacing:0}.game-controlbar{display:block}.game-controlbar .key-help{display:none}.game-controlbar:before{display:none!important}.action-bar{display:grid;grid-template-columns:1fr 1fr;gap:7px}.action-button,.skill-button{justify-content:center;text-align:center;font-size:10px;padding:9px}.action-button kbd{font-size:9px}.action-button small{display:inline}.mission-strip{display:grid;grid-template-columns:1fr auto;gap:7px 10px;padding:11px}.phase-badge{justify-self:start;grid-column:1;grid-row:1;font-size:10px}.mission-strip b{grid-column:1/-1;grid-row:2;font-size:10px}.mission-strip>span:last-child{grid-column:2;grid-row:1;font-size:9px}.interaction-prompt{bottom:141px;font-size:9px;padding:8px 10px}.yarn-status{bottom:180px;font-size:9px;padding:7px 9px}.touch-controls{bottom:20px;left:16px;right:16px}.in-run #adventureSidebar{display:block}.camp-status{margin-bottom:17px}.build-card{padding:13px}.build-card b{font-size:13px}.build-card small{font-size:10px}.build-card>span{font-size:27px}.workshop-note{font-size:11px}.mission-checks p{font-size:11px}.camp-status p{font-size:10px}.cache-options{grid-template-columns:1fr}.cache-options .upgrade-option{flex-wrap:wrap}.cache-options .upgrade-option small{line-height:1.8}.in-run .stage-toast{font-size:9px;top:88px}.in-run .boss-active .stage-toast{top:120px}.in-run .ability-detail p{font-size:11px}.lobby-panel{bottom:34px}.lobby-copy{padding:15px}.lobby-copy h2{font-size:24px}.lobby-copy p{font-size:10px}.start-note{font-size:8px}.game-viewport.playing .timer-hud{max-width:119px}.timer-hud>span{font-size:6px}.boss-hud>div:first-child{font-size:8px}}
+
+.sound-controls{display:flex;align-items:center;gap:10px}.volume-control{display:flex;align-items:center;gap:6px;font-size:9px;color:#b4c3b0}.volume-control input{width:65px;height:22px;accent-color:#dfbd83;cursor:pointer}.volume-control output{width:26px;font-variant-numeric:tabular-nums}.sound-button[aria-pressed=true]{border-color:#7e956f;color:#d8d9aa}@media(max-width:1200px){.site-header{gap:23px}.site-header nav{gap:23px}.volume-control>span{display:none}.volume-control input{width:50px}}@media(max-width:600px){.sound-controls{gap:5px}.volume-control input{width:40px}.volume-control output{display:none}.site-header nav{gap:10px}.site-header{gap:8px}.volume-control{gap:0}.brand-sub{letter-spacing:0}}
+
+/* Expedition navigation and persistent camp/companion status. */
+.expedition-map{display:none;position:absolute;right:16px;top:153px;width:140px;border:1px solid #bdc18a8a;background:#19352eee;pointer-events:none;box-shadow:3px 3px #152b2355}.in-run .expedition-map{display:block}.expedition-map>div{display:flex;justify-content:space-between;padding:6px 8px;color:#d5d8b4;font-size:9px}.expedition-map b{font-weight:400;color:#a8bfa4}.expedition-map canvas{display:block;width:100%;height:auto;image-rendering:pixelated}.expedition-map p{margin:0;padding:6px 5px;font-size:9px;text-align:center;color:#ebd5a3;border-top:1px solid #66816155}.camp-danger{position:absolute;left:50%;bottom:58px;transform:translateX(-50%);max-width:85%;width:max-content;padding:8px 12px;border:1px solid #d5ba7b;background:#4a432de8;color:#f3d99a;font-size:11px;pointer-events:none}.camp-danger.breached{background:#642f29ed;border-color:#f0a58e;color:#ffe0cd}.guard-heading{display:flex!important;justify-content:space-between;font-size:10px;color:#e1d5b2;margin:17px 0 7px;padding-top:12px;border-top:1px solid #83987444}.guard-heading span{font-size:8px;color:#a3b59b}.guard-row{display:flex;align-items:center;gap:7px;font-size:10px;padding:7px 0}.guard-row>span{width:63px;flex-shrink:0}.guard-row small{display:block;font-size:8px;color:#b9b695;margin-top:3px}.guard-meter{height:5px;flex:1;background:#344a40}.guard-meter i{display:block;height:100%;background:#cfcb8d}.guard-row b{font-size:10px;width:20px;text-align:right}.guard-row.fallen{opacity:.65}.guard-row.fallen small{color:#e4acac}.camp-status #starStatus{color:#e9ce91;font-size:10px;line-height:1.7}.camp-status .empty-roster{font-size:9px;line-height:1.7}.overlay-card .result-stars{font-size:32px;color:#edcb88;letter-spacing:9px;margin:0 0 13px}.overlay-card .rating-rule{font-size:10px;color:#b8c7a8;line-height:1.8}.game-overlay{overflow-y:auto}.overlay-card{margin:auto}.in-run .yarn-status:not([hidden])~.camp-danger{bottom:94px}
+@media(max-width:600px){.expedition-map{width:96px;right:10px;top:154px}.expedition-map>div{font-size:8px;padding:4px 5px}.expedition-map p{font-size:8px;padding:4px}.camp-danger{bottom:184px;font-size:9px;padding:6px 8px}.in-run .yarn-status{bottom:217px}.overlay-card .result-stars{font-size:26px}.overlay-card .rating-rule{font-size:9px}.result-stats{gap:15px;margin:14px 0}.result-stats b{font-size:23px}}
+
+</style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="喵野求生首页"><canvas class="brand-cat" width="40" height="40" data-cat="orange"></canvas><span>喵野求生<span class="brand-sub">白天探索，夜晚一起守家</span></span></a>
+      <nav aria-label="主导航"><button class="nav-button active" id="adventureNav">开始冒险</button><button class="nav-button" id="guideNav">玩法指南</button><button class="nav-button" id="journalNav">冒险手记 <span class="tiny-dot"></span></button></nav>
+      <div class="sound-controls"><button class="sound-button" id="soundButton" aria-label="开启音效" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4zM16 9l5 6m0-6-5 6"/></svg><span>音效关</span></button><label class="volume-control"><span>音量</span><input id="volumeSlider" type="range" min="0" max="100" value="45" aria-label="音效音量"><output id="volumeValue">45%</output></label></div>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="pageTitle"><div><p class="intro-kicker"><span></span>森林远征 · 线索搜救 / 营地核心 / 全员生还</p><h1 id="pageTitle">把伙伴带回家，一起守到天亮<span class="pixel-spark">✦</span></h1></div><p class="intro-note">白天走远一点，夜晚靠近一点。<br>一根毛线，也能扭转战局。</p></section>
+      <div class="play-layout">
+        <section class="game-panel" aria-label="猫咪生存游戏">
+          <div class="game-topbar"><span><span class="live-dot"></span><b id="regionName">萤火森林</b><span class="region-sub" id="regionSub">第一站 / 森林边缘</span></span><div class="topbar-actions"><span class="game-mode">探索守营 · 2.2</span><button id="pauseButton" class="icon-button" aria-label="暂停游戏" disabled><svg viewBox="0 0 20 20"><path d="M6 4v12M14 4v12"/></svg></button><button id="fullscreenButton" class="icon-button" aria-label="游戏全屏"><svg viewBox="0 0 20 20"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/></svg></button></div></div>
+          <div class="game-viewport" id="gameViewport">
+            <canvas id="gameCanvas" width="960" height="600" tabindex="0" aria-label="游戏画面。WASD 或方向键移动，Q 毛线围猎，Shift 冲刺，E 交互，数字 1 到 3 选择设施，空格释放技能，P 暂停。"></canvas>
+            <div class="hud" id="hud"><div class="player-hud"><canvas width="40" height="40" id="hudPortrait"></canvas><div><div class="hud-name"><b id="hudName">橘子</b><span id="hudLevel">Lv. 1</span></div><div class="health-track" role="progressbar" aria-label="生命值" aria-valuemin="0" aria-valuemax="110" aria-valuenow="110" id="healthProgress"><span id="healthFill"></span></div><span class="health-value" id="healthText">110 / 110</span></div></div><div class="timer-hud"><span id="timerLabel">距离天黑还有</span><b id="timerText">00:40</b></div><div class="fish-hud"><span class="fish-symbol">◀</span><b id="fishCount">0</b><span>小鱼干</span></div></div>
+            <div class="world-label">微风、萤火，和一点点勇气。</div>
+            <div class="lobby-panel" id="lobbyPanel"><div class="lobby-copy"><span class="small-tag">这一次，不只是活下来</span><h2>把大家带回家。</h2><p>沿线索找到藏身的小猫。<br>守住营地，争取全员生还。</p></div><button class="primary-button" id="startButton"><span>带橘子出发</span><svg viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button><span class="start-note">每局约 4 分钟 · 探索、围猎、守家</span></div>
+            <div class="expedition-map" id="expeditionMap"><div><span>森林地图</span><b>北 ↑</b></div><canvas id="minimapCanvas" width="192" height="120" aria-label="森林小地图：白点为玩家，金点为营地，方框为藏身点，红点为附近敌人。"></canvas><p id="searchClue">按区域线索搜索</p></div><div id="campDanger" class="camp-danger" role="status" hidden></div>
+            <div class="stage-toast" id="stageToast" role="status" aria-live="polite"></div>
+            <div class="boss-hud" id="bossHud" hidden><div><span>森林守卫 · 石头咕噜</span><span id="bossHpText"></span></div><div class="boss-track"><span id="bossFill"></span></div></div>
+            <div class="interaction-prompt" id="interactionPrompt" hidden></div><div class="yarn-status" id="yarnStatus" hidden></div><div class="touch-controls" id="touchControls" hidden><div id="joystick" aria-label="拖动摇杆移动"><span id="joystickKnob"></span></div><div class="touch-action-grid"><button id="touchYarn" aria-label="毛线结界">牵线</button><button id="touchDash" aria-label="冲刺">冲刺</button><button id="touchInteract" aria-label="交互">交互</button><button id="touchSkill" aria-label="释放专属技能">技能</button></div></div>
+            <div class="game-overlay" id="gameOverlay" hidden></div>
+            <div class="experience-track" aria-label="等级经验"><span id="xpFill"></span></div>
+          </div>
+          <div class="mission-strip"><span class="phase-badge" id="phaseBadge">☀ 白天探索</span><b id="missionText">找到迷路猫，把它带回篝火旁。</b><span id="teamCount">伙伴 0 / 3</span></div>
+          <div class="game-controlbar"><div class="key-help"><span><kbd>WASD</kbd> 移动</span><span><kbd>P</kbd> 暂停</span></div><div class="action-bar"><button class="action-button" id="yarnButton" disabled><kbd>Q</kbd> 毛线结界 <small id="yarnCooldown">就绪</small></button><button class="action-button" id="dashButton" disabled><kbd>Shift</kbd> 冲刺 <small id="dashCooldown">就绪</small></button><button class="action-button" id="interactButton" disabled><kbd>E</kbd> 交互</button><button class="skill-button" id="skillButton" disabled><span class="skill-dot">✦</span><span id="skillButtonText">喵喵震击</span><span id="skillCooldown">就绪</span></button></div></div>
+        </section>
+
+        <aside class="companion-panel" aria-labelledby="companionTitle"><div class="section-heading"><h2 id="companionTitle">选择你的伙伴</h2><span>3 位小勇士</span></div><p class="aside-note" id="selectionNote">每只猫咪，都有自己的拿手好戏。</p>
+          <div class="cat-list" role="group" aria-label="猫咪选择">
+            <button class="cat-card selected" data-select="orange" aria-pressed="true"><span class="portrait-frame orange"><canvas width="72" height="72" data-cat="orange"></canvas></span><span class="cat-copy"><span class="cat-title">橘子 <span>营地守卫</span></span><span class="cat-description">能吃能打，勇气满格</span><span class="cat-trait"><i></i>范围震击 · 修复营地</span></span><span class="select-mark">✓</span></button>
+            <button class="cat-card" data-select="black" aria-pressed="false"><span class="portrait-frame black"><canvas width="72" height="72" data-cat="black"></canvas></span><span class="cat-copy"><span class="cat-title">墨墨 <span>毛线游侠</span></span><span class="cat-description">悄悄靠近，轻轻溜走</span><span class="cat-trait"><i></i>快速影步 · 长效结界</span></span><span class="select-mark">✓</span></button>
+            <button class="cat-card" data-select="white" aria-pressed="false"><span class="portrait-frame white"><canvas width="72" height="72" data-cat="white"></canvas></span><span class="cat-copy"><span class="cat-title">雪球 <span>伙伴医师</span></span><span class="cat-description">软乎乎，也能保护自己</span><span class="cat-trait"><i></i>治疗光圈 · 召回伙伴</span></span><span class="select-mark">✓</span></button>
+          </div>
+          <div id="adventureSidebar" hidden>
+            <div class="camp-status"><div><span>篝火营地</span><b id="campHpText">220 / 220</b></div><div class="camp-health-track" role="progressbar" aria-label="营地耐久" id="campProgress" aria-valuemin="0" aria-valuemax="220" aria-valuenow="220"><span id="campHealthFill"></span></div><p id="campStatusNote">核心被拆毁即失败，伙伴能暂时拦怪。</p><div class="guard-heading">守营伙伴 <span>生命不可忽视</span></div><div id="guardRoster"></div><p id="starStatus">★★★ · 全员生还可获三星</p></div>
+            <div class="wood-heading"><h3>营地工坊</h3><span>木料 <b id="woodCount">6</b></span></div><p class="workshop-note">选设施 → 靠近虚线空地 → 按 E 搭建</p>
+            <div class="build-list"><button data-build="turret" class="build-card selected" aria-pressed="true"><span>✣</span><div><b>毛线炮台 <kbd>1</kbd></b><small>自动射击，守住一侧</small></div><em>6 木料</em></button><button data-build="trap" class="build-card" aria-pressed="false"><span>❖</span><div><b>猫薄荷陷阱 <kbd>2</kbd></b><small>减速伤害，配合围猎</small></div><em>4 木料</em></button><button data-build="garden" class="build-card" aria-pressed="false"><span>✚</span><div><b>呼噜花圃 <kbd>3</kbd></b><small>修复营地，靠近回血</small></div><em>5 木料</em></button></div>
+            <div class="mission-checks"><h3>这一夜的计划</h3><p id="rescueCheck">○ 接应迷路的小猫</p><p id="buildCheck">○ 用木料搭建防线</p><p id="nightCheck">○ 守到天亮</p></div>
+          </div>
+          <div class="ability-detail"><div class="ability-title"><span class="ability-icon" id="abilityIcon">✦</span><div><span class="detail-label">专属技能</span><h3 id="abilityName">喵喵震击</h3></div><kbd>空格</kbd></div><p id="abilityDescription">一声元气喵叫，击退身边的捣蛋鬼并造成范围伤害。</p><div class="stats"><div><span>生命</span><div class="stat-blocks" id="statHealth"></div></div><div><span>速度</span><div class="stat-blocks" id="statSpeed"></div></div><div><span>攻击</span><div class="stat-blocks" id="statAttack"></div></div></div></div>
+          <div class="route"><div class="section-heading"><h3>这次的冒险</h3><span id="routeLabel">3 个关卡</span></div><ol><li class="current" data-stage="1"><span class="route-dot"></span><span>萤火森林<small>接应伙伴，搭建第一道防线</small></span><b>01</b></li><li data-stage="2"><span class="route-dot"></span><span>蘑菇湿地<small>躲开孢子，也能引怪进去</small></span><b>02</b></li><li data-stage="3"><span class="route-dot"></span><span>月光遗迹<small>结界困住守卫，全员归来</small></span><b>03</b></li></ol></div>
+        </aside>
+      </div>
+      <section class="tips-row" aria-label="冒险小提示"><div><span class="tip-icon">↗</span><p><b>毛线也是武器</b><span>按 Q 牵线，绕回线头形成围猎结界</span></p></div><div><span class="tip-icon fish-symbol">◀</span><p><b>每一只猫都值得救</b><span>查看藏身点，找到后按 E 接应并护送</span></p></div><div><span class="tip-icon">⚑</span><p><b>白天冒险，夜晚守家</b><span>伙伴只能暂时拦怪，及时回营才能全员生还</span></p></div></section>
+    </main>
+    <footer><span><span class="footer-paw">✦</span> 为每一只勇敢的小猫而做</span><span id="bestRecord">还没有脚印，去留下第一段冒险吧。</span><span class="version">森林远征 v2.2</span></footer>
+  </div>
+  <dialog id="infoDialog" aria-labelledby="dialogTitle"><button id="closeDialog" class="dialog-close" aria-label="关闭">×</button><div id="dialogContent"></div></dialog>
+  <script>
+/* Original pixel art. Every sprite is drawn locally; no remote assets required. */
+(function () {
+  'use strict';
+  const CAT_PIXELS = [
+    '...oo.........oo...',
+    '..obbo.......obbo..',
+    '..obpbo.....obpbo..',
+    '..obppoooooooppbo..',
+    '..obbbbbbbbbbbbbo..',
+    '.obbbbbhbhbbbbbbbo.',
+    '.obbbbbhbhbbbbbbbo.',
+    '.obbbbbbbbbbbbbbbo.',
+    '.obbEEbbbbbEEbbbbo.',
+    '.obbELbbbbbELbbbbo.',
+    '.obbbbbccccbbbbbbo.',
+    '.obbbcccncccbbbbbo.',
+    '..obccccwccccbbbo..',
+    '...oobcccccbboo....',
+    '....oosssssoo.....',
+    '....obbbccbbbo..oo.',
+    '...obbbbccbbbboobo.',
+    '...obbbbccbbbbobbo.',
+    '...obbbbccbbbbbbo..',
+    '....obbbbbbboooo...',
+    '....obboobbbo......',
+    '....oooo.oooo......'
+  ];
+  const palettes = {
+    orange:{o:'#634739',b:'#efa85c',h:'#c87b41',p:'#e9b1a1',c:'#f8df9a',E:'#483b37',L:'#f6f1d0',n:'#ba7867',w:'#725142',s:'#8aa58a'},
+    black:{o:'#202d39',b:'#465366',h:'#5b6876',p:'#a68b9c',c:'#566579',E:'#b9d6b4',L:'#263647',n:'#dcabb0',w:'#263647',s:'#92c7bd'},
+    white:{o:'#64736d',b:'#eeeacb',h:'#cbd1bb',p:'#e9b1b9',c:'#fff6dc',E:'#547c79',L:'#faf5da',n:'#d49499',w:'#9c8476',s:'#b8a2c7'}
+  };
+  const rect = (c,x,y,w,h,color) => { c.fillStyle=color; c.fillRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h)); };
+  function rng(seed){let s=seed>>>0;return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296;};}
+  function ellipse(c,x,y,rx,ry,color){c.fillStyle=color;c.beginPath();c.ellipse(Math.round(x),Math.round(y),rx,ry,0,0,Math.PI*2);c.fill();}
+  function cat(c,x,y,type='orange',scale=2,frame=0,face=1,ghost=false){
+    c.save();c.translate(Math.round(x),Math.round(y));c.scale(face,1);if(ghost)c.globalAlpha=.45;
+    ellipse(c,0,17*scale/2,9*scale,3*scale,'#152d2850');
+    const pal=palettes[type], bob=frame?((Math.floor(frame*9)%2)?-1:0):0;
+    CAT_PIXELS.forEach((row,iy)=>{for(let ix=0;ix<row.length;ix++){if(pal[row[ix]]){const x0=Math.round((ix-9)*scale),y0=Math.round((iy-13+bob)*scale);rect(c,x0,y0,Math.round((ix-8)*scale)-x0,Math.round((iy-12+bob)*scale)-y0,pal[row[ix]]);}}});
+    c.restore();
+  }
+  function portrait(canvas,type){const c=canvas.getContext('2d');c.imageSmoothingEnabled=false;c.clearRect(0,0,canvas.width,canvas.height);const s=canvas.width>=60?2.5:1.55;cat(c,canvas.width/2,canvas.height*.55,type,s);}
+  function pine(c,x,y,size=1,tone=0){
+    const colors=[['#24463e','#305345','#42654b','#638056'],['#1d3d37','#294a3d','#355d46','#4d7450'],['#325745','#43674a','#587e51','#739259']][tone%3];
+    const r=(a,b,w,h,col)=>rect(c,x+a*size,y+b*size,w*size,h*size,col);
+    ellipse(c,x,y+12*size,37*size,13*size,'#183d314a');
+    r(-5,-27,10,43,'#574d3c');r(1,-20,4,30,'#78654a');r(-9,8,19,5,'#4b5140');
+    r(-41,-31,82,10,colors[0]);r(-33,-45,68,19,colors[0]);r(-25,-60,52,21,colors[0]);r(-19,-79,39,25,colors[0]);r(-12,-91,26,25,colors[0]);r(-5,-105,11,25,colors[0]);
+    r(-36,-36,65,10,colors[1]);r(-27,-51,52,16,colors[1]);r(-20,-66,40,17,colors[1]);r(-14,-80,28,15,colors[1]);r(-6,-95,12,17,colors[1]);
+    r(-30,-39,21,5,colors[2]);r(-22,-53,29,6,colors[2]);r(-17,-69,23,6,colors[2]);r(-10,-83,18,6,colors[2]);r(-3,-99,5,13,colors[2]);
+    r(-25,-42,8,3,colors[3]);r(-16,-57,11,3,colors[3]);r(-9,-72,9,3,colors[3]);
+  }
+  function bush(c,x,y,size=1){ellipse(c,x,y+5,22*size,7*size,'#21412f55');rect(c,x-20*size,y-6*size,40*size,11*size,'#385f3d');rect(c,x-15*size,y-13*size,28*size,13*size,'#537949');rect(c,x-7*size,y-18*size,15*size,9*size,'#61884e');rect(c,x-10*size,y-10*size,10*size,3*size,'#829959');rect(c,x+9*size,y-4*size,7*size,4*size,'#476e3e');}
+  function rock(c,x,y,s=1,blue=false){const p=blue?['#445966','#708387','#91a09a']:['#56634e','#8a8b69','#abaa7d'];ellipse(c,x,y+6*s,16*s,6*s,'#223d304a');rect(c,x-15*s,y-10*s,29*s,17*s,p[0]);rect(c,x-10*s,y-17*s,19*s,22*s,p[1]);rect(c,x-5*s,y-20*s,11*s,20*s,p[1]);rect(c,x-9*s,y-16*s,12*s,4*s,p[2]);rect(c,x+5*s,y-9*s,8*s,5*s,p[2]);}
+  function mushroom(c,x,y,s=1,purple=false){rect(c,x-2*s,y-4*s,4*s,12*s,'#e8d8ab');rect(c,x-9*s,y-9*s,18*s,6*s,purple?'#aa89b2':'#c57854');rect(c,x-6*s,y-13*s,12*s,6*s,purple?'#c8a5c4':'#e59d6e');rect(c,x-3*s,y-11*s,3*s,3*s,'#f0d5a0');rect(c,x+4*s,y-7*s,3*s,2*s,'#f0d5a0');}
+  function fish(c,x,y,s=1,color='#f7cc82'){rect(c,x-5*s,y-3*s,9*s,6*s,color);rect(c,x-3*s,y-5*s,6*s,10*s,color);rect(c,x+4*s,y-1*s,3*s,2*s,color);rect(c,x+7*s,y-4*s,3*s,8*s,color);rect(c,x-4*s,y-2*s,2*s,2*s,'#6e6749');}
+  function heart(c,x,y,s=1){const rows=['.rr.rr.','rrrrrrr','rrrrrrr','.rrrrr.','..rrr..','...r...'];rows.forEach((r,iy)=>[...r].forEach((v,ix)=>{if(v==='r')rect(c,x+(ix-3)*s,y+(iy-3)*s,s,s,'#edaaa0');}));}
+  function enemy(c,e,t){
+    c.save();c.translate(Math.round(e.x),Math.round(e.y));const bob=Math.sin(t*6+e.id)*2, hurt=e.flash>0;if(hurt)c.scale(e.kind==='boss'?1.035:1.1,e.kind==='boss'?.97:.9);
+    if(e.kind==='boss'){
+      ellipse(c,0,22,39,13,'#18322b7a');
+      rect(c,-31,-28,62,47,hurt?'#f1dbb1':'#697c75');rect(c,-25,-38,50,57,hurt?'#f1dbb1':'#8a9990');rect(c,-38,-11,13,37,'#60716c');rect(c,25,-11,13,37,'#60716c');rect(c,-28,18,20,10,'#586960');rect(c,9,18,20,10,'#586960');
+      rect(c,-23,-38,48,7,'#a6af97');rect(c,-32,-26,9,16,'#b1b8a1');rect(c,-16,-16,10,9,'#f2c279');rect(c,9,-16,10,9,'#f2c279');rect(c,-12,3,27,6,'#415b54');rect(c,-15,-47,24,11,'#64885c');rect(c,2,-51,18,13,'#83a06b');rect(c,-9,-47,6,6,'#b1c582');
+    } else if(e.kind==='bat'){
+      const flap=Math.floor(t*8+e.id)%2;ellipse(c,0,13,16,4,'#20382f55');rect(c,-9,-6+bob,18,15,hurt?'#f1dbc8':'#8c809f');rect(c,-7,-11+bob,5,8,'#8c809f');rect(c,3,-11+bob,5,8,'#8c809f');rect(c,-25,-9+flap*9+bob,17,8,'#685f85');rect(c,9,-9+flap*9+bob,17,8,'#685f85');rect(c,-5,-1+bob,3,4,'#f5d690');rect(c,4,-1+bob,3,4,'#f5d690');
+    } else if(e.kind==='mushroom'){
+      ellipse(c,0,17,17,5,'#26433366');rect(c,-9,0+bob,19,16,'#d5c8a3');rect(c,-19,-7+bob,38,12,hurt?'#f3dfa9':'#ae7695');rect(c,-14,-17+bob,28,12,'#c78ba4');rect(c,-8,-22+bob,15,8,'#d2a0b0');rect(c,-10,-13+bob,5,5,'#f4dfb6');rect(c,7,-7+bob,6,5,'#f4dfb6');rect(c,-5,7+bob,3,4,'#594f5d');rect(c,4,7+bob,3,4,'#594f5d');
+    } else {
+      ellipse(c,0,12,18,5,'#274b3355');const p=hurt?['#f2ebcb','#fff5d9']:['#89ab77','#bad095'];rect(c,-16,-3+bob,32,14,p[0]);rect(c,-12,-12+bob,24,23,p[0]);rect(c,-7,-17+bob,15,10,p[1]);rect(c,-11,-11+bob,7,5,p[1]);rect(c,-6,-1+bob,3,5,'#3c654c');rect(c,6,-1+bob,3,5,'#3c654c');rect(c,-1,5+bob,4,2,'#537255');
+    }
+    c.restore();
+    if(e.kind!=='boss'&&e.hp<e.maxHp){rect(c,e.x-14,e.y-30,28,3,'#274139');rect(c,e.x-14,e.y-30,28*Math.max(0,e.hp/e.maxHp),3,'#e2c78e');}
+  }
+  function makeMap(stage=1){
+    const {WORLD,SEARCH_REGIONS}=CatSurvival,canvas=document.createElement('canvas');canvas.width=WORLD.width;canvas.height=WORLD.height;
+    const c=canvas.getContext('2d'),random=rng(1024+stage*21),ground=stage===1?['#58734d','#5c774f','#547049','#668053','#78905d']:stage===2?['#4e6b59','#52735c','#466653','#627e64','#829878']:['#4d6962','#526e67','#49615e','#647e6e','#879987'];
+    rect(c,0,0,canvas.width,canvas.height,ground[0]);
+    for(let i=0;i<4300;i++){const x=Math.floor(random()*400)*4,y=Math.floor(random()*250)*4;rect(c,x,y,4+Math.floor(random()*5)*4,4,ground[Math.floor(random()*ground.length)]);}
+    // Branching paths lead toward landmarks. The wilderness remains traversable.
+    for(const region of SEARCH_REGIONS){const end=region.sites[1];for(let step=0;step<130;step++){const a=step/129,x=WORLD.campX+(end.x-WORLD.campX)*a+Math.sin(a*8)*17,y=WORLD.campY+(end.y-WORLD.campY)*a;rect(c,x-13,y-8,26,16,stage===3?'#879383':'#979365');rect(c,x-5,y,3,2,'#b8b27e');}}
+    for(let y=-112;y<114;y+=8){const half=Math.sqrt(Math.max(0,1-y*y/13000))*163;rect(c,WORLD.campX-half,WORLD.campY-12+y,half*2,8,stage===3?'#708475':'#7e8c59');}
+    for(let i=0;i<180;i++){const x=80+random()*1440,y=100+random()*800;if(Math.hypot(x-WORLD.campX,y-WORLD.campY)<210)continue;rect(c,x,y,3,7,ground[4]);rect(c,x-4,y+1,11,2,ground[3]);if(i%4===0){rect(c,x-2,y-3,7,4,i%3?'#d0bf81':'#e1ad90');}}
+    for(const region of SEARCH_REGIONS)for(const v of region.sites){for(let n=0;n<3;n++){bush(c,v.x-58+n*52,v.y-49);mushroom(c,v.x+42+n*8,v.y+35,.6,stage>1);}rock(c,v.x-63,v.y+25,.85,stage===3);}
+    // Remote landmarks give each search region a recognizable silhouette.
+    for(let i=0;i<8;i++)pine(c,110+i*42,90+(i%2)*18,.9,1);
+    for(let y=-50;y<55;y+=8){const half=Math.sqrt(Math.max(0,1-y*y/3100))*98;rect(c,175-half,835+y,half*2,8,'#4f7e76');rect(c,160-half*.6,837+y,half,2,'#7b9d8a');}
+    for(const v of [[1290,750],[1370,710],[1480,770]]){rock(c,v[0],v[1],1.7,true);mushroom(c,v[0]+22,v[1]+11,.9,true);}
+    c.save();c.translate(WORLD.campX-570,WORLD.campY-350);
+    // A little cabin and a quiet camping corner.
+    rect(c,724,130,111,66,'#594d3d');rect(c,731,133,97,59,'#997749');
+    for(let y=136;y<190;y+=10)rect(c,731,y,97,2,'#785c3f');
+    rect(c,719,122,119,10,'#674e42');rect(c,727,111,103,13,'#a47554');rect(c,737,100,83,13,'#ba9060');rect(c,748,91,62,11,'#d0a36d');rect(c,756,84,45,8,'#d8af77');
+    rect(c,785,149,23,43,'#4e4b39');rect(c,790,151,15,38,'#645c40');rect(c,791,172,3,3,'#eac385');rect(c,744,145,25,24,'#4d5c45');rect(c,747,147,19,18,'#f3dca0');rect(c,754,147,3,18,'#a78355');rect(c,747,154,19,3,'#a78355');rect(c,738,191,88,7,'#625b42');
+    // Logs, tent, sign, and fire pit.
+    rect(c,613,308,56,9,'#494f3c');rect(c,620,282,42,26,'#d1b781');rect(c,628,264,26,21,'#e5ce96');rect(c,638,251,9,19,'#f1dca2');rect(c,640,272,16,37,'#8d7c52');rect(c,644,282,15,27,'#3f5440');rect(c,620,307,44,5,'#b5a273');
+    [[534,364],[585,361]].forEach(([x,y])=>{rect(c,x,y,32,9,'#715a3e');rect(c,x+2,y,28,3,'#a38450');rect(c,x+29,y,5,9,'#c5a169');});
+    for(let i=0;i<8;i++){const a=i/8*Math.PI*2;rock(c,570+Math.cos(a)*18,350+Math.sin(a)*9,.28);}
+    rect(c,563,344,17,8,'#715a3d');rect(c,568,340,6,16,'#6a4936');
+    rect(c,395,306,5,34,'#736242');rect(c,376,298,41,15,'#ad9461');rect(c,379,301,34,2,'#cdb781');rect(c,388,305,14,3,'#6e6947');rect(c,399,301,3,9,'#6e6947');
+    // Stone gate marks the final stage.
+    if(stage===3){for(const x of [437,604]){rect(c,x,126,26,86,'#71857c');rect(c,x-3,120,32,10,'#a4ad95');for(let y=134;y<211;y+=16)rect(c,x,y,26,2,'#4d6b61');}rect(c,437,105,193,20,'#8e9e8c');rect(c,455,100,158,7,'#b1bba1');rect(c,473,109,16,5,'#acc9a5');rect(c,577,109,16,5,'#acc9a5');}
+    c.restore();
+    for(let x=0;x<1640;x+=49){pine(c,x,65+random()*23,.85+random()*.25,1);pine(c,x,1015+random()*25,.9,0);}
+    for(let y=155;y<1000;y+=71){pine(c,8,y,1.05,1);pine(c,1590,y,1.05,0);}
+    return canvas;
+  }
+  function fire(c,t,x=570,y=350,destroyed=false){c.save();c.translate(x-570,y-350);if(destroyed){rect(c,555,340,35,15,'#4b4b43');rect(c,560,338,21,6,'#787869');c.restore();return;}for(let i=0;i<7;i++){let h=7+Math.sin(t*7+i*1.6)*5;rect(c,560+i*3,347-h,3,h,i%2?'#efbb65':'#d68d51');}rect(c,568,340,6,8,'#ffe2a0');c.restore();}
+  window.PixelArt={cat,portrait,enemy,fish,heart,rect,ellipse,makeMap,fire,rng,palettes};
+})();
+
+</script><script>
+/* DOM-independent simulation: exploration, escort, construction and yarn combat. */
+(function(root){
+'use strict';
+const CATS={
+ orange:{name:'橘子',role:'营地守卫',hp:110,speed:152,damage:25,rate:.63,cooldown:8,skill:'喵喵震击',icon:'✦',description:'震击周围敌人，造成 70 伤害并击退。在营地附近使用，还能修复 15 点营地耐久。冷却 8 秒。',bars:[5,3,5]},
+ black:{name:'墨墨',role:'毛线游侠',hp:85,speed:180,damage:22,rate:.55,cooldown:7,skill:'无敌影步',icon:'↯',description:'2.5 秒无敌，移速提高 65%。墨墨的毛线结界额外持续 3 秒。冷却 7 秒。',bars:[3,5,4]},
+ white:{name:'雪球',role:'伙伴医师',hp:95,speed:160,damage:23,rate:.62,cooldown:10,skill:'治愈光圈',icon:'✚',description:'恢复 30 生命并击退敌人；护送中的猫立刻跟上。在营地旁额外修复 25 耐久。每 6 秒自愈 3 生命。',bars:[4,4,4]}
+};
+const PACE=Object.freeze({day:40,night:40,duration:80,enemySpeed:.72,bossAt:55,bossCharge:1.8,enemyShotSpeed:78,yarnTime:10});
+const WORLD=Object.freeze({width:1600,height:1000,minX:40,maxX:1560,minY:70,maxY:950,campX:800,campY:520,coreRadius:62,guardRadius:150,helperHp:90,guardDamage:5,demolition:22});
+const SEARCH_REGIONS=[
+ {name:'西北 · 松风林',sites:[{x:190,y:190},{x:400,y:230},{x:260,y:415}]},
+ {name:'东北 · 旧木屋',sites:[{x:1190,y:190},{x:1430,y:330},{x:1220,y:420}]},
+ {name:'西南 · 芦苇坡',sites:[{x:180,y:670},{x:390,y:780},{x:510,y:890}]},
+ {name:'东南 · 月光石',sites:[{x:1200,y:650},{x:1430,y:820},{x:1150,y:890}]}
+];
+const STAGES=[{name:'萤火森林',sub:'第 1 夜 / 找到第一位伙伴',duration:PACE.duration},{name:'蘑菇湿地',sub:'第 2 夜 / 守住家的方向',duration:PACE.duration},{name:'月光遗迹',sub:'第 3 夜 / 一起迎接黎明',duration:PACE.duration}];
+const BUILDS={turret:{name:'毛线炮台',cost:6,icon:'✣',description:'自动射击，压住一条进攻路线'},trap:{name:'猫薄荷陷阱',cost:4,icon:'❖',description:'减速和持续伤害，配合结界围猎'},garden:{name:'呼噜花圃',cost:5,icon:'✚',description:'持续修复营地，靠近还能回血'}};
+const UPGRADES=[{id:'double',name:'双尾毛线',icon:'⋈',description:'每次攻击同时射出两团毛线'},{id:'yarn',name:'雷鸣线团',icon:'ϟ',description:'结界伤害 +60，冷却缩短 3 秒'},{id:'engineer',name:'纸箱工程师',icon:'⌂',description:'设施效果 +50%，再获得 4 木料'},{id:'revive',name:'第九条命',icon:'♡',description:'获得一次原地复活，恢复半血'},{id:'magnet',name:'鱼干磁铁',icon:'◎',description:'拾取范围扩大，立即升一级'},{id:'power',name:'锋利小爪',icon:'↗',description:'攻击 +30%，技能冷却 −20%'},{id:'health',name:'暖心罐头',icon:'✚',description:'生命上限 +25，小猫和营地回满'},{id:'speed',name:'轻盈铃铛',icon:'♧',description:'移速 +15%，冲刺冷却减半'}];
+function seeded(seed){let s=seed>>>0;return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296;};}
+const clamp=(n,min,max)=>Math.max(min,Math.min(max,n));
+const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
+function inside(point,poly){let hit=false;for(let i=0,j=poly.length-1;i<poly.length;j=i++){const a=poly[i],b=poly[j];if((a.y>point.y)!==(b.y>point.y)&&point.x<(b.x-a.x)*(point.y-a.y)/(b.y-a.y)+a.x)hit=!hit;}return hit;}
+function area(points){let a=0;for(let i=0;i<points.length;i++){const p=points[i],q=points[(i+1)%points.length];a+=p.x*q.y-q.x*p.y;}return Math.abs(a)/2;}
+class Game{
+ constructor({onEvent=()=>{},seed=Date.now()}={}){this.onEvent=onEvent;this.seed=seed;this.rng=seeded(seed);this.selected='orange';this.reset();}
+ emit(type,data={}){this.onEvent({type,...data});}
+ reset(id=this.selected){
+  this.selected=CATS[id]?id:'orange';const c=CATS[this.selected];
+  this.player={x:WORLD.campX-15,y:WORLD.campY-38,hp:c.hp,maxHp:c.hp,speed:c.speed,damage:c.damage,rate:c.rate,invuln:0,shadow:0,face:1,walk:0,level:1,xp:0,nextXp:5,regen:0,dx:1,dy:0,dash:0};
+  Object.assign(this,{state:'lobby',stage:1,stageTime:0,totalTime:0,fish:0,kills:0,score:0,skillCd:0,attackCd:.4,spawnCd:3.5,nextId:0,bossSpawned:false,bossDefeated:false,wood:6,rescued:0,loops:0,loopHits:0,dashCd:0,yarnCd:0,yarn:null,selectedBuild:'turret',phase:'day',double:false,yarnBonus:0,engineering:1,revives:0,magnet:100,cooldownScale:1,dashScale:1,cacheTaken:0,hazardCd:11,breathing:false,lossReason:''});
+  this.camp={x:WORLD.campX,y:WORLD.campY,hp:220,maxHp:220,flash:0,underAttack:false,breached:false,intruders:0,alertCd:0,damageTick:0,destroyed:false};this.fallen=0;this.stars=0;
+  this.slots=[{x:WORLD.campX-128,y:WORLD.campY-20,type:null,level:0,cd:0},{x:WORLD.campX+41,y:WORLD.campY+91,type:null,level:0,cd:0},{x:WORLD.campX+125,y:WORLD.campY-46,type:null,level:0,cd:0}];
+  for(const key of ['enemies','bullets','drops','particles','rings','texts','enemyShots','upgrades','zones','hazards','helpers','resources','offeredUpgrades','impacts'])this[key]=[];
+  this.prepareStage();
+ }
+ prepareStage(){
+  this.phase='day';this.stageTime=0;this.hazardCd=11;this.breathing=false;this.yarn=null;this.yarnCd=0;this.dashCd=0;
+  const region=SEARCH_REGIONS[Math.floor(this.rng()*SEARCH_REGIONS.length)],occupied=Math.floor(this.rng()*3);
+  this.searchRegion=region.name;this.searchSites=region.sites.map((v,i)=>({...v,id:i,searched:false,occupied:i===occupied}));
+  this.kitten={...region.sites[occupied],type:['black','white','orange'][this.stage-1],found:false,following:false,saved:false,walk:0};
+  const places=[{x:535,y:285},{x:1120,y:590},{x:570,y:745},{x:1010,y:225}];this.cache={...places[Math.floor(this.rng()*places.length)],opened:false};
+  this.resources=[{x:650,y:360},{x:1030,y:470},{x:560,y:530},{x:970,y:700},{x:590,y:720},{x:840,y:280},...region.sites.map(v=>({x:v.x+40,y:v.y+45}))].map((v,i)=>({...v,amount:i===0?3:2,collected:false}));
+  Object.assign(this.camp,{underAttack:false,breached:false,intruders:0,alertCd:0,damageTick:0});
+  for(const h of this.helpers)if(h.alive){h.blocking=0;h.hp=Math.min(h.maxHp,h.hp+20);h.x=h.homeX;h.y=h.homeY;}
+  this.offeredUpgrades=[];this.objectiveWarned=false;
+ }
+ start(id=this.selected){this.rng=seeded(this.seed);this.reset(id);this.state='playing';this.emit('start',{cat:id});this.emit('stage',{stage:1});}
+ select(id){if(this.state==='lobby'&&CATS[id])this.reset(id);}
+ pause(){if(this.state==='playing'){this.state='paused';this.emit('pause');}}
+ resume(){if(this.state==='paused'){this.state='playing';this.emit('resume');}}
+ home(){this.reset(this.selected);this.emit('home');}
+ ring(x,y,r,color){this.rings.push({x,y,r,color,life:.65,maxLife:.65});}
+ float(x,y,text,color='#f7dda1'){this.texts.push({x,y,text:String(text),color,life:1});}
+ burst(x,y,color,count=8){for(let i=0;i<count;i++){const a=this.rng()*Math.PI*2,s=20+this.rng()*65;this.particles.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:.3+this.rng()*.4,color});}}
+ dash(){if(this.state!=='playing'||this.dashCd>0)return false;this.player.dash=.18;this.player.invuln=Math.max(this.player.invuln,.25);this.dashCd=3.2*this.dashScale;this.emit('dash');return true;}
+ weave(){
+  if(this.state!=='playing'||this.yarnCd>0)return false;
+  if(this.yarn){if(distance(this.player,this.yarn.points[0])<65&&this.yarn.length>170)return this.closeYarn();this.emit('hint',{text:'带着毛线回到发光线头，围成一个圈！'});return false;}
+  this.yarn={points:[{x:this.player.x,y:this.player.y}],life:PACE.yarnTime,length:0};this.emit('weave');return true;
+ }
+ closeYarn(){
+  const line=this.yarn;if(!line||line.points.length<4||area(line.points)<1800)return false;const polygon=line.points.map(p=>({...p}));let hits=0;
+  for(const e of this.enemies)if(inside(e,polygon)){e.stun=3.2;e.armored=false;this.hitEnemy(e,90+this.yarnBonus+this.player.level*7,{source:this.player,heavy:true,force:230});hits++;}
+  const life=this.selected==='black'?9:6;this.zones.push({points:polygon,life,maxLife:life});this.loops++;this.loopHits+=hits;this.score+=hits*20;this.yarn=null;this.yarnCd=this.yarnBonus?6:9;this.emit('loop',{hits});this.reap();return true;
+ }
+ skill(){
+  if(this.state!=='playing'||this.skillCd>0)return false;const p=this.player;this.skillCd=CATS[this.selected].cooldown*this.cooldownScale;
+  if(this.selected==='black'){p.shadow=2.5;p.invuln=Math.max(p.invuln,2.5);this.ring(p.x,p.y,110,'#a5c7d3');}
+  else{
+   const heal=this.selected==='white';if(heal){const n=Math.min(30,p.maxHp-p.hp);p.hp+=n;this.float(p.x,p.y-30,`+${Math.ceil(n)}`,'#c5ebad');if(this.kitten.following){this.kitten.x=p.x-25;this.kitten.y=p.y+20;}}
+   const radius=heal?133:160;this.ring(p.x,p.y,radius,heal?'#d4edb5':'#f3cd85');
+   for(const e of this.enemies){const dx=e.x-p.x,dy=e.y-p.y,d=Math.hypot(dx,dy);if(d<radius+e.radius){e.armored=false;this.hitEnemy(e,heal?24:70,{source:p,heavy:true,force:360});e.stun=Math.max(e.stun,.4);}}
+   if(distance(p,this.camp)<125)this.repair(heal?25:15);
+  }
+  this.emit('skill',{cat:this.selected});this.reap();return true;
+ }
+ selectBuild(type){if(BUILDS[type]){this.selectedBuild=type;this.emit('buildSelect',{build:type});}}
+ interaction(){
+  const p=this.player,list=[];
+  if(!this.kitten.found)for(const site of this.searchSites)if(!site.searched)list.push({kind:'search',target:site,label:'查看藏身点 · 寻找小猫',range:55});
+  if(this.kitten.found&&!this.kitten.saved&&!this.kitten.following)list.push({kind:'rescue',target:this.kitten,label:'接应迷路猫，一起回营地',range:55});
+  if(!this.cache.opened)list.push({kind:'cache',target:this.cache,label:'打开月光宝箱',range:52});
+  this.slots.forEach((slot,index)=>{const spec=BUILDS[slot.type||this.selectedBuild],cost=slot.type?4+slot.level:spec.cost;list.push({kind:'build',target:slot,index,cost,label:slot.level>=3?`${spec.name}已满级`:slot.type?`升级${spec.name} · ${cost}木料`:`搭建${spec.name} · ${cost}木料`,range:48});});
+  if(!this.camp.breached&&this.camp.hp<this.camp.maxHp)list.push({kind:'repair',target:this.camp,label:'修复营地 45 耐久 · 2木料',range:58});
+  return list.filter(o=>distance(p,o.target)<o.range).sort((a,b)=>distance(p,a.target)-distance(p,b.target))[0]||null;
+ }
+ interact(){
+  if(this.state!=='playing')return false;const a=this.interaction();if(!a){this.emit('hint',{text:'靠近藏身点、已找到的小猫、宝箱或营地空地，再按 E。'});return false;}
+  if(a.kind==='search'){a.target.searched=true;if(a.target.occupied){this.kitten.found=true;this.emit('kittenFound');this.float(a.target.x,a.target.y-35,'找到小猫！','#f2d5b3');}else{this.wood++;this.emit('searchEmpty');}return true;}
+  if(a.kind==='rescue'){this.kitten.following=true;this.emit('rescueStart');return true;}
+  if(a.kind==='cache'){this.state='choice';this.emit('cache');return true;}
+  if(a.kind==='repair'){if(this.wood<2){this.emit('hint',{text:'需要 2 份木料，捡起地上的木料包。'});return false;}this.wood-=2;this.repair(45);this.emit('repair');return true;}
+  const slot=a.target;if(slot.level>=3){this.emit('hint',{text:'这处设施已升到最高级。'});return false;}
+  if(this.wood<a.cost){this.emit('hint',{text:`还差 ${a.cost-this.wood} 份木料，探索地图或安全开箱可以获得。`});return false;}
+  this.wood-=a.cost;slot.type??=this.selectedBuild;slot.level++;slot.cd=0;this.ring(slot.x,slot.y,45,'#b7dfa3');this.emit('build',{build:slot.type,level:slot.level});return true;
+ }
+ chooseCache(choice){if(this.state!=='choice'||!['safe','risk'].includes(choice))return false;this.cache.opened=true;this.cacheTaken++;this.state='playing';if(choice==='safe'){this.wood+=4;this.player.hp=Math.min(this.player.maxHp,this.player.hp+15);}else{this.player.rate*=.8;this.wood+=2;for(let i=0;i<3;i++)this.spawn('bat',true);}this.emit('cacheChosen',{choice});return true;}
+ repair(n){if(this.camp.breached||this.camp.destroyed)return false;const old=this.camp.hp;this.camp.hp=Math.min(this.camp.maxHp,this.camp.hp+n);if(this.camp.hp>old)this.float(this.camp.x,this.camp.y-34,`营地 +${Math.ceil(this.camp.hp-old)}`,'#bde0a6');}
+ hurtCamp(n){if(this.state!=='playing'||n<=0)return;this.camp.hp=Math.max(0,this.camp.hp-n);this.camp.flash=.2;if(this.camp.damageTick<=0){this.emit('campHit');this.camp.damageTick=.45;}if(this.camp.hp<=0){this.camp.destroyed=true;for(const slot of this.slots){slot.type=null;slot.level=0;}this.burst(this.camp.x,this.camp.y,'#d4ae84',35);this.finish(false,'营地核心被拆毁了。伙伴只能暂时拦怪，收到警报要及时回防。');}}
+ livingHelpers(){return this.helpers.filter(h=>h.alive);}
+ rating(){const alive=this.livingHelpers().length;return this.rescued===3&&this.fallen===0?3:alive>0?2:1;}
+ hurtHelper(h,n){if(!h.alive||this.state!=='playing')return;h.hp=Math.max(0,h.hp-n);h.flash=.15;if(h.hp<=0){h.alive=false;h.blocking=0;this.fallen++;this.float(h.x,h.y-32,'伙伴牺牲','#edb3b2');this.burst(h.x,h.y,'#d3c2d8',12);this.emit('helperFallen',{cat:h.type,fallen:this.fallen});}}
+ assignDefenders(){
+  const alive=this.livingHelpers();for(const h of alive)h.blocking=0;
+  const threats=this.enemies.filter(e=>e.hp>0&&distance(e,this.camp)<WORLD.guardRadius).sort((a,b)=>distance(a,this.camp)-distance(b,this.camp));
+  for(const e of this.enemies)e.guardId=null;
+  for(const e of threats){const h=alive.filter(v=>v.blocking<2).sort((a,b)=>distance(e,a)-distance(e,b))[0];if(h){e.guardId=h.id;h.blocking++;}}
+  for(const h of alive){const target=threats.find(e=>e.guardId===h.id);if(target){const dx=target.x-this.camp.x,dy=target.y-this.camp.y,d=Math.hypot(dx,dy)||1;h.x=this.camp.x+dx/d*100;h.y=this.camp.y+dy/d*100;}else{h.x=h.homeX;h.y=h.homeY;}}
+  return threats;
+ }
+ resolveCamp(dt){
+  const threats=this.enemies.filter(e=>e.hp>0&&distance(e,this.camp)<WORLD.guardRadius),core=this.enemies.filter(e=>e.hp>0&&e.stun<=0&&e.stagger<=0&&distance(e,this.camp)<WORLD.coreRadius+e.radius);
+  for(const e of threats){const h=this.helpers.find(v=>v.alive&&v.id===e.guardId);if(h&&e.stun<=0&&e.stagger<=0&&distance(e,h)<e.radius+22)this.hurtHelper(h,WORLD.guardDamage*(e.kind==='boss'?2:1)*dt);}
+  const intruders=core.filter(e=>!this.helpers.some(h=>h.alive&&h.id===e.guardId));
+  this.camp.underAttack=threats.length>0;this.camp.breached=intruders.length>0;this.camp.intruders=intruders.length;
+  if(threats.length&&this.camp.alertCd<=0){this.emit('campAlarm',{breached:this.camp.breached});this.camp.alertCd=6;}
+  if(intruders.length)this.hurtCamp(intruders.reduce((n,e)=>n+WORLD.demolition*(e.kind==='boss'?1.5:1),0)*dt);
+ }
+
+ spawn(kind,elite=false){
+  if(this.enemies.length>=60)return;const p=this.player;let x,y;
+  if(this.phase==='night'){const a=this.rng()*Math.PI*2,d=430+this.rng()*100;x=clamp(this.camp.x+Math.cos(a)*d,WORLD.minX,WORLD.maxX);y=clamp(this.camp.y+Math.sin(a)*d,WORLD.minY,WORLD.maxY);if(Math.hypot(x-p.x,y-p.y)<160){x=clamp(this.camp.x-Math.cos(a)*d,WORLD.minX,WORLD.maxX);y=clamp(this.camp.y-Math.sin(a)*d,WORLD.minY,WORLD.maxY);}}
+  else{const a=this.rng()*Math.PI*2,d=230+this.rng()*110;x=clamp(p.x+Math.cos(a)*d,WORLD.minX,WORLD.maxX);y=clamp(p.y+Math.sin(a)*d,WORLD.minY,WORLD.maxY);if(Math.hypot(x-p.x,y-p.y)<150){x=clamp(p.x-Math.cos(a)*d,WORLD.minX,WORLD.maxX);y=clamp(p.y-Math.sin(a)*d,WORLD.minY,WORLD.maxY);}}
+  if(!kind){const r=this.rng();kind=this.stage===1?(r<.82?'slime':'bat'):this.stage===2?(r<.55?'mushroom':r<.8?'slime':'bat'):(r<.35?'bat':r<.7?'mushroom':'slime');}
+  const spec={slime:[43,38,9,15],bat:[34,62,8,13],mushroom:[67,30,11,18],boss:[600,25,15,34]}[kind],hp=kind==='boss'?spec[0]:Math.round(spec[0]*(1+(this.stage-1)*.16)*(elite?1.8:1));
+  this.enemies.push({id:this.nextId++,kind,x,y,hp,maxHp:hp,speed:(spec[1]+(this.stage-1)*3)*PACE.enemySpeed,damage:spec[2],radius:spec[3],flash:0,stun:0,stagger:0,hitSlow:0,hitSlowFactor:1,knockX:0,knockY:0,shotCd:4,charge:0,campCd:0,campBound:this.rng()<.72,elite,armored:kind==='boss'||elite||(this.phase==='night'&&this.rng()<.28)});
+ }
+ hitEnemy(e,damage,impact={}){
+  if(e.hp<=0)return;
+  const source=impact.source||this.player,dx=impact.dx??e.x-source.x,dy=impact.dy??e.y-source.y,d=Math.hypot(dx,dy)||1;
+  const boss=e.kind==='boss',resistance=boss?.2:e.armored?.5:1,camp=impact.from==='camp';
+  const force=(impact.force??(camp?90:210))*resistance;
+  e.knockX=clamp((e.knockX||0)+dx/d*force,-400,400);e.knockY=clamp((e.knockY||0)+dy/d*force,-400,400);
+  e.stagger=Math.max(e.stagger||0,boss?.035:.1);
+  const wasSlowed=e.hitSlow>0;
+  e.hitSlow=Math.max(e.hitSlow||0,boss?.4:camp?.35:.7);const factor=boss?.85:camp?.78:.55;e.hitSlowFactor=wasSlowed?Math.min(e.hitSlowFactor,factor):factor;
+  e.hp-=damage;e.flash=.18;this.float(e.x,e.y-25,Math.round(damage));
+  if(!wasSlowed&&!boss&&!camp)this.float(e.x,e.y+26,'减速','#b6deec');
+  this.impacts.push({x:e.x,y:e.y-5,angle:Math.atan2(dy,dx),life:.22,maxLife:.22,heavy:!!impact.heavy,armored:!!e.armored});
+  this.burst(e.x,e.y,e.armored?'#bcdae7':'#f4d396',impact.heavy?12:6);
+  this.emit('hit',{armored:!!e.armored,heavy:!!impact.heavy,kind:e.kind});
+ }
+
+ hurt(damage){const p=this.player;if(p.invuln>0||this.state!=='playing')return;p.hp=Math.max(0,p.hp-damage);p.invuln=1.2;this.float(p.x,p.y-38,`−${damage}`,'#f4afa0');this.burst(p.x,p.y,'#e5a095');this.emit('hurt');if(p.hp<=0){if(this.revives>0){this.revives--;p.hp=p.maxHp*.5;p.invuln=3;this.ring(p.x,p.y,130,'#f4dfba');this.emit('revive');}else this.finish(false,'小猫需要休息了。冲刺能穿过敌人，毛线结界能帮你解围。');}}
+ reap(){for(const e of this.enemies){if(e.hp>0)continue;this.kills++;this.score+=e.kind==='boss'?400:e.elite?30:10;this.burst(e.x,e.y,e.kind==='mushroom'?'#c49bad':'#bbd28e',12);this.emit('defeat',{kind:e.kind});if(e.kind==='boss'){this.bossDefeated=true;this.emit('bossDefeated');}else this.drops.push({x:e.x,y:e.y,kind:this.rng()<.1?'heart':'fish',life:24});}this.enemies=this.enemies.filter(e=>e.hp>0);}
+ levelUp(){const p=this.player;p.level++;p.damage+=3;p.hp=Math.min(p.maxHp,p.hp+8);this.ring(p.x,p.y,60,'#e6d49b');this.emit('level',{level:p.level});}
+ pickup(drop){const p=this.player;if(drop.kind==='heart'){const a=Math.min(14,p.maxHp-p.hp);p.hp+=a;this.float(p.x,p.y-29,`+${Math.ceil(a)}`,'#c2e5ad');}else{this.fish++;this.score+=5;p.xp++;if(p.xp>=p.nextXp){p.xp-=p.nextXp;p.nextXp+=3;this.levelUp();}}this.emit('pickup',{kind:drop.kind});}
+ draftUpgrades(){const pool=UPGRADES.filter(u=>!(u.id==='double'&&this.double)&&!(u.id==='yarn'&&this.yarnBonus)&&!(u.id==='magnet'&&this.magnet>100));for(let i=pool.length-1;i>0;i--){const j=Math.floor(this.rng()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}this.offeredUpgrades=pool.slice(0,3);}
+ chooseUpgrade(id){
+  if(this.state!=='upgrade'||!this.offeredUpgrades.some(u=>u.id===id))return false;const p=this.player;
+  if(id==='power'){p.damage*=1.3;this.cooldownScale*=.8;}if(id==='health'){p.maxHp+=25;p.hp=p.maxHp;this.camp.hp=this.camp.maxHp;}if(id==='speed'){p.speed*=1.15;this.dashScale*=.5;}if(id==='double')this.double=true;if(id==='yarn')this.yarnBonus=60;if(id==='engineer'){this.engineering+=.5;this.wood+=4;}if(id==='revive')this.revives++;if(id==='magnet'){this.magnet=180;this.levelUp();}
+  this.upgrades.push(id);this.stage++;for(const key of ['enemies','bullets','drops','enemyShots','rings','particles','texts','hazards','zones','impacts'])this[key]=[];this.spawnCd=3;this.attackCd=.3;this.skillCd=0;p.x=WORLD.campX-35;p.y=WORLD.campY-5;p.invuln=1;p.shadow=0;p.dash=0;this.camp.hp=Math.min(this.camp.maxHp,this.camp.hp+25);this.wood+=2;this.prepareStage();this.state='playing';this.emit('stage',{stage:this.stage});return true;
+ }
+ finish(won,reason=''){if(this.state==='won'||this.state==='lost')return;this.state=won?'won':'lost';this.lossReason=reason;this.stars=won?this.rating():0;if(won)this.score+=600+this.stars*100;this.emit('finish',{won,score:this.score,fish:this.fish,kills:this.kills,stage:this.stage,time:this.totalTime,cat:this.selected,rescued:this.rescued,loops:this.loops,survivors:this.livingHelpers().length,fallen:this.fallen,stars:this.stars,reason});}
+ fireAt(source,target,damage,speed=370,offset=0){const angle=Math.atan2(target.y-source.y,target.x-source.x)+offset;this.bullets.push({x:source.x,y:source.y-5,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,damage,life:1.2,from:source===this.player?'player':'camp'});}
+ updateWorld(dt){
+  const p=this.player,k=this.kitten;
+  for(const r of this.resources)if(!r.collected&&distance(p,r)<(this.magnet>100?55:32)){r.collected=true;this.wood+=r.amount;this.float(r.x,r.y-20,`木料 +${r.amount}`,'#e3d1a0');this.emit('wood');}
+  if(k.following&&!k.saved){const d=distance(p,k);if(d>28){const speed=Math.min(p.speed*.95,185);k.x+=(p.x-k.x)/(d||1)*speed*dt;k.y+=(p.y-k.y)/(d||1)*speed*dt;k.walk+=dt;}else k.walk=0;if(distance(k,this.camp)<70){k.saved=true;k.following=false;this.rescued++;this.wood+=3;this.score+=150;const hx=this.camp.x-43+this.helpers.length*37,hy=this.camp.y+24;this.helpers.push({id:this.rescued,type:k.type,x:hx,y:hy,homeX:hx,homeY:hy,cd:.5,hp:WORLD.helperHp,maxHp:WORLD.helperHp,alive:true,blocking:0,flash:0});this.repair(30);this.emit('rescued',{count:this.rescued});}}
+  if(this.yarn){const line=this.yarn;line.life-=dt;const last=line.points.at(-1),d=distance(p,last);if(d>12){line.points.push({x:p.x,y:p.y});line.length+=d;}if(line.length>180&&distance(p,line.points[0])<38&&area(line.points)>1800)this.closeYarn();else if(line.life<=0){this.yarn=null;this.yarnCd=3;this.emit('yarnMiss');}}
+  for(const z of this.zones)z.life-=dt;this.zones=this.zones.filter(z=>z.life>0);
+  for(const slot of this.slots){if(!slot.type)continue;slot.cd-=dt;const factor=(1+(slot.level-1)*.6)*this.engineering;
+   if(slot.type==='turret'&&slot.cd<=0){const target=this.enemies.filter(e=>distance(e,slot)<245&&e.hp>0).sort((a,b)=>distance(a,slot)-distance(b,slot))[0];if(target){this.fireAt(slot,target,22*factor);slot.cd=1.1;}}
+   if(slot.type==='trap')for(const e of this.enemies)if(distance(e,slot)<76){e.slow=.35;e.hp-=14*factor*dt;}
+   if(slot.type==='garden'){if(!this.camp.breached)this.camp.hp=Math.min(this.camp.maxHp,this.camp.hp+1.9*factor*dt);if(distance(p,slot)<95)p.hp=Math.min(p.maxHp,p.hp+3*factor*dt);}
+  }
+  for(const h of this.helpers){if(!h.alive)continue;h.flash=Math.max(0,h.flash-dt);h.cd-=dt;if(h.cd<=0){const target=this.enemies.filter(e=>distance(e,h)<220&&e.hp>0).sort((a,b)=>distance(a,h)-distance(b,h))[0];if(target){this.fireAt(h,target,18+this.stage*2);h.cd=1.6;}}}
+  if(this.phase==='night'&&this.stage>=2){this.hazardCd-=dt;if(this.hazardCd<=0){this.hazardCd=11;this.hazards.push({x:p.x,y:p.y,r:58,life:4.4,warn:2.2,tick:0});this.emit('hazard');}}
+  for(const h of this.hazards){h.life-=dt;h.warn-=dt;if(h.warn<=0){h.tick-=dt;if(h.tick<=0){if(distance(p,h)<h.r)this.hurt(9);for(const e of this.enemies)if(distance(e,h)<h.r)e.hp-=12;h.tick=.7;}}}this.hazards=this.hazards.filter(h=>h.life>0);
+ }
+ update(dt,input={x:0,y:0}){
+  if(this.state!=='playing')return;dt=clamp(dt,0,.05);const p=this.player;this.totalTime+=dt;this.stageTime+=dt;
+  if(this.stageTime>=PACE.day&&this.phase==='day'){this.phase='night';this.emit('night');}
+  for(const key of ['skillCd','dashCd','yarnCd'])this[key]=Math.max(0,this[key]-dt);p.invuln=Math.max(0,p.invuln-dt);p.shadow=Math.max(0,p.shadow-dt);p.dash=Math.max(0,p.dash-dt);this.camp.flash=Math.max(0,this.camp.flash-dt);
+  if(this.selected==='white'){p.regen+=dt;if(p.regen>=6){p.regen-=6;p.hp=Math.min(p.maxHp,p.hp+3);}}
+  const length=Math.hypot(input.x||0,input.y||0);if(length>.05){const m=Math.max(1,length);p.dx=input.x/m;p.dy=input.y/m;p.walk+=dt;if(input.x)p.face=input.x>0?1:-1;}else p.walk=0;
+  if(length>.05||p.dash>0){const speed=p.speed*(p.shadow>0?1.65:1)*(this.yarn?1.12:1)*(p.dash>0?3.9:1);p.x+=p.dx*speed*dt;p.y+=p.dy*speed*dt;}
+  p.x=clamp(p.x,WORLD.minX,WORLD.maxX);p.y=clamp(p.y,WORLD.minY,WORLD.maxY);this.camp.alertCd=Math.max(0,this.camp.alertCd-dt);this.camp.damageTick=Math.max(0,this.camp.damageTick-dt);
+  const breathing=this.phase==='night'&&(this.stageTime-PACE.day)%16>=12&&this.stageTime<PACE.duration;
+  if(breathing&&!this.breathing)this.emit('breather');this.breathing=breathing;
+  this.spawnCd=Math.max(0,this.spawnCd-dt);
+  if(!breathing&&this.spawnCd<=0&&(this.stageTime<PACE.duration||!this.kitten.saved)){this.spawn();if(this.phase==='night')this.spawn();this.spawnCd=this.phase==='day'?3.6-this.stage*.25:2-this.stage*.2;}
+
+  if(this.stage===3&&this.stageTime>=PACE.bossAt&&!this.bossSpawned){this.bossSpawned=true;this.spawn('boss');this.emit('boss');}
+  this.assignDefenders();for(const e of this.enemies)e.slow=e.hitSlow>0?e.hitSlowFactor:1;this.updateWorld(dt);if(this.state!=='playing')return;
+  this.attackCd-=dt;if(this.attackCd<=0){const target=this.enemies.filter(e=>e.hp>0&&distance(e,p)<335).sort((a,b)=>distance(a,p)-distance(b,p))[0];if(target){this.fireAt(p,target,p.damage,370,this.double?-.11:0);if(this.double)this.fireAt(p,target,p.damage,370,.11);this.attackCd=p.rate;this.emit('attack');}}
+  for(const e of this.enemies){
+   if(e.hp<=0)continue;e.flash=Math.max(0,e.flash-dt);e.stun=Math.max(0,e.stun-dt);e.stagger=Math.max(0,e.stagger-dt);e.hitSlow=Math.max(0,e.hitSlow-dt);e.campCd=Math.max(0,e.campCd-dt);
+   // Integrate the impulse before stun/AI. Exponential decay is frame-rate independent.
+   const decay=Math.exp(-10*dt);e.x=clamp(e.x+e.knockX*(1-decay)/10,WORLD.minX,WORLD.maxX);e.y=clamp(e.y+e.knockY*(1-decay)/10,WORLD.minY,WORLD.maxY);e.knockX*=decay;e.knockY*=decay;
+   if(e.stun>0||e.stagger>0)continue;
+
+   for(const z of this.zones)if(inside(e,z.points))e.slow=Math.min(e.slow,.45);
+   const guard=this.helpers.find(h=>h.alive&&h.id===e.guardId),defend=this.phase==='night'&&e.campBound,target=guard|| (defend?this.camp:p),dx=target.x-e.x,dy=target.y-e.y,d=Math.hypot(dx,dy)||1;
+   if(e.kind==='boss'){e.shotCd-=dt;if(e.shotCd<=0&&e.charge===0)e.charge=PACE.bossCharge;if(e.charge>0){e.charge-=dt;if(e.charge<=0){e.charge=0;e.shotCd=4.8;for(let i=0;i<10;i++){const a=i*Math.PI/5;this.enemyShots.push({x:e.x,y:e.y,vx:Math.cos(a)*PACE.enemyShotSpeed,vy:Math.sin(a)*PACE.enemyShotSpeed,life:4});}this.ring(e.x,e.y,85,'#e6ac82');}}else if(d>e.radius+18){e.x+=dx/d*e.speed*e.slow*dt;e.y+=dy/d*e.speed*e.slow*dt;}}
+   else if(d>e.radius+12){const speed=e.speed*e.slow*(e.kind==='mushroom'?(Math.sin(this.totalTime*4+e.id)>.3?1.8:.5):1);e.x+=dx/d*speed*dt;e.y+=dy/d*speed*dt;}
+   if(distance(e,p)<e.radius+14)this.hurt(e.damage);if(this.state!=='playing')return;
+  }
+  for(let i=0;i<this.enemies.length;i++)for(let j=i+1;j<this.enemies.length;j++){const a=this.enemies[i],b=this.enemies[j],dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy),r=(a.radius+b.radius)*.75;if(d>0&&d<r){const f=(r-d)*.035;a.x-=dx/d*f;a.y-=dy/d*f;b.x+=dx/d*f;b.y+=dy/d*f;}}
+  for(const b of this.bullets){b.x+=b.vx*dt;b.y+=b.vy*dt;b.life-=dt;if(b.life<=0)continue;for(const e of this.enemies)if(e.hp>0&&Math.hypot(e.x-b.x,e.y-b.y)<e.radius+6){this.hitEnemy(e,b.damage*(e.armored?.35:1),{dx:b.vx,dy:b.vy,from:b.from});b.life=0;break;}}this.bullets=this.bullets.filter(b=>b.life>0);this.reap();this.resolveCamp(dt);if(this.state!=='playing')return;
+  for(const s of this.enemyShots){s.x+=s.vx*dt;s.y+=s.vy*dt;s.life-=dt;if(distance(s,p)<17){this.hurt(12);s.life=0;}else if(distance(s,this.camp)<23){this.hurtCamp(3);s.life=0;}if(this.state!=='playing')return;}this.enemyShots=this.enemyShots.filter(s=>s.life>0);
+  for(const drop of this.drops){drop.life-=dt;const dx=p.x-drop.x,dy=p.y-drop.y,d=Math.hypot(dx,dy);if(d<this.magnet){drop.x+=dx/(d||1)*240*dt;drop.y+=dy/(d||1)*240*dt;}if(d<22){this.pickup(drop);drop.life=0;}}this.drops=this.drops.filter(d=>d.life>0).slice(-90);
+  for(const v of this.particles){v.x+=v.vx*dt;v.y+=v.vy*dt;v.life-=dt;}this.particles=this.particles.filter(v=>v.life>0).slice(-260);for(const r of this.rings)r.life-=dt;this.rings=this.rings.filter(v=>v.life>0);for(const t of this.texts){t.y-=25*dt;t.life-=dt;}this.texts=this.texts.filter(v=>v.life>0).slice(-65);
+  for(const hit of this.impacts)hit.life-=dt;this.impacts=this.impacts.filter(hit=>hit.life>0).slice(-40);
+  if(this.stageTime>=PACE.duration){if(!this.kitten.saved){if(!this.objectiveWarned){this.objectiveWarned=true;this.emit('hint',{text:'天快亮了，还有一只小猫没回家！先完成护送。'});}}else if(this.stage<3){this.state='upgrade';this.yarn=null;this.draftUpgrades();this.emit('upgrade',{stage:this.stage});}else if(this.bossDefeated)this.finish(true);}
+ }
+}
+const exported={Game,CATS,STAGES,BUILDS,UPGRADES,PACE,WORLD,SEARCH_REGIONS,inside,area};if(typeof module!=='undefined'&&module.exports)module.exports=exported;else root.CatSurvival=exported;
+})(typeof window!=='undefined'?window:globalThis);
+
+
+
+</script><script>
+/* Pixel props and live navigation for the exploration / defense layer. */
+(function(){
+ const A=PixelArt;
+ function label(c,x,y,text,color='#eee5ba'){c.save();c.font='11px "Microsoft YaHei",sans-serif';c.textAlign='center';const w=c.measureText(text).width+14;A.rect(c,x-w/2,y-13,w,19,'#18382eea');c.fillStyle=color;c.fillText(text,x,y);c.restore();}
+ function path(c,points){if(!points.length)return;c.beginPath();points.forEach((p,i)=>i?c.lineTo(p.x,p.y):c.moveTo(p.x,p.y));}
+ function under(c,g,t){
+  const active=g.state!=='lobby';
+  if(active&&g.phase==='night'){A.rect(c,0,0,CatSurvival.WORLD.width,CatSurvival.WORLD.height,'#11244769');for(const r of [103,83,63])A.ellipse(c,g.camp.x,g.camp.y,r,r*.65,'#e3bc5520');}
+  if(active)for(const zone of g.zones){c.save();path(c,zone.points);c.closePath();c.fillStyle='#b2d99822';c.fill();c.strokeStyle='#c6e4ab';c.lineWidth=2;c.globalAlpha=Math.min(1,zone.life);c.setLineDash([6,4]);c.stroke();c.restore();}
+  if(active)for(const h of g.hazards){c.save();c.fillStyle=h.warn>0?'#d6a0b529':'#b090c276';c.strokeStyle=h.warn>0?'#f5bbca':'#c5a5e0';c.lineWidth=2;c.beginPath();c.arc(h.x,h.y,h.r,0,Math.PI*2);c.fill();c.setLineDash([5,5]);c.stroke();c.restore();if(h.warn>0)label(c,h.x,h.y+3,'孢子落点','#f4c1c6');}
+  if(active){c.save();c.strokeStyle=g.camp.breached?'#ee9c83':g.camp.underAttack?'#edce8a':'#d9d4a16b';c.lineWidth=g.camp.underAttack?3:2;c.setLineDash([7,6]);c.beginPath();c.arc(g.camp.x,g.camp.y,CatSurvival.WORLD.coreRadius,0,Math.PI*2);c.stroke();c.restore();}
+  for(const s of g.slots){
+   c.save();if(!active)c.globalAlpha=.55;
+   if(!s.type){c.strokeStyle='#ddd0a197';c.lineWidth=2;c.setLineDash([5,5]);c.strokeRect(s.x-28,s.y-18,56,36);c.setLineDash([]);A.rect(c,s.x-11,s.y-1,22,3,'#d3c49a');A.rect(c,s.x-1,s.y-10,3,22,'#d3c49a');if(active&&Math.hypot(g.player.x-s.x,g.player.y-s.y)<130)label(c,s.x,s.y+37,'空地 · E搭建');}
+   else{
+    const R=(x,y,w,h,col)=>A.rect(c,s.x+x,s.y+y,w,h,col);
+    if(s.type==='turret'){A.ellipse(c,s.x,s.y+13,25,9,'#24392b55');R(-19,5,38,13,'#8e774e');R(-15,-6,30,20,'#cfb87d');R(-18,-10,36,6,'#e6ce98');R(-11,-25,22,18,'#96b4a8');R(-15,-21,30,11,'#a6c7b7');R(-3,-34,7,20,'#e3d1a4');R(-6,-33,13,5,'#f4ddac');R(-8,-20,5,6,'#d2e4c7');}
+    if(s.type==='trap'){A.ellipse(c,s.x,s.y,76,47,'#b8cc7125');R(-23,-11,46,23,'#6d8050');R(-25,-6,50,13,'#8b9c65');for(let i=0;i<5;i++){R(-17+i*8,-17+Math.sin(i)*5,4,17,'#a3c788');R(-20+i*8,-19+Math.sin(i)*5,9,5,'#d1dd93');}}
+    if(s.type==='garden'){R(-24,0,48,20,'#8f6e4f');R(-20,-5,40,16,'#5d7752');for(let i=0;i<5;i++){R(-17+i*8,-16,3,20,'#9dbe85');R(-20+i*8,-21+(i%2)*6,10,7,i%2?'#ecd5a0':'#d9aec0');}R(-24,12,48,4,'#bd9a65');}
+    label(c,s.x,s.y+36,`${CatSurvival.BUILDS[s.type].name} ${'★'.repeat(s.level)}`);
+   }c.restore();
+  }
+  if(!active)return;
+  for(const r of g.resources){if(r.collected)continue;A.ellipse(c,r.x,r.y+8,15,5,'#253c2c55');for(let j=0;j<3;j++){A.rect(c,r.x-12,r.y-8+j*6,24,5,'#c1a270');A.rect(c,r.x-12,r.y-8+j*6,4,5,'#e2c393');}A.rect(c,r.x-2,r.y-10,3,23,'#736d47');if(Math.hypot(g.player.x-r.x,g.player.y-r.y)<100)label(c,r.x,r.y-18,`木料 +${r.amount}`);}
+  const box=g.cache;if(!box.opened){A.ellipse(c,box.x,box.y+11,21,7,'#243f3344');A.rect(c,box.x-16,box.y-9,32,25,'#9d794e');A.rect(c,box.x-19,box.y-15,38,13,'#e2bf78');A.rect(c,box.x-17,box.y-13,34,3,'#f4d791');A.rect(c,box.x-3,box.y-4,7,10,'#96cdc0');A.rect(c,box.x-1,box.y-2,3,4,'#e9f2c7');label(c,box.x,box.y-25,'月光宝箱','#bde9d8');}
+  if(!g.kitten.found)for(const site of g.searchSites){const near=Math.hypot(g.player.x-site.x,g.player.y-site.y)<100;A.ellipse(c,site.x,site.y+11,27,10,'#213a2c70');A.rect(c,site.x-24,site.y-15,48,29,site.searched?'#67775a':'#a78d61');A.rect(c,site.x-29,site.y-21,58,9,'#c7b17b');A.rect(c,site.x-13,site.y-8,26,22,'#324736');label(c,site.x,site.y-31,site.searched?'已查看':near?'E · 查看藏身点':'？ 藏身点',site.searched?'#9eaf93':'#f0d8a4');}
+  const k=g.kitten;if(k.found&&!k.saved){A.cat(c,k.x,k.y,k.type,1.5,k.walk);if(!k.following){A.rect(c,k.x-22,k.y+13,44,4,'#bc9b6f');label(c,k.x,k.y-37,'！迷路猫 · E接应','#f2c6be');}else label(c,k.x,k.y-32,'跟着你回家 ♡','#d7e6b6');}
+  for(const helper of g.helpers){if(!helper.alive){A.rect(c,helper.homeX-7,helper.homeY-4,14,13,'#969d92');A.rect(c,helper.homeX-2,helper.homeY-8,4,12,'#cacbbc');continue;}A.cat(c,helper.x,helper.y,helper.type,1.35,helper.blocking?t:0);A.rect(c,helper.x-19,helper.y-30,38,4,'#35453b');A.rect(c,helper.x-19,helper.y-30,38*helper.hp/helper.maxHp,4,helper.hp<25?'#ecac97':'#bed491');if(helper.blocking){label(c,helper.x,helper.y-41,`拦住 ${helper.blocking} 只`,helper.hp<25?'#f2b4a4':'#f3dba9');c.save();c.strokeStyle='#f0d6a477';c.lineWidth=2;for(const e of g.enemies)if(e.guardId===helper.id){c.beginPath();c.moveTo(helper.x,helper.y);c.lineTo(e.x,e.y);c.stroke();}c.restore();}}
+
+  label(c,g.camp.x,g.camp.y+67,g.camp.destroyed?'营地已被拆毁':`营地核心　${Math.ceil(g.camp.hp)}/${g.camp.maxHp}`,g.camp.hp<70?'#f5ac95':'#e5dfb1');
+  if(g.camp.flash>0)A.ellipse(c,g.camp.x,g.camp.y,55,35,'#ed957956');
+ }
+ function over(c,g,t,camera,width){
+  if(g.state==='lobby')return;
+  if(g.yarn){const line=g.yarn,anchor=line.points[0];c.save();path(c,[...line.points,g.player]);c.strokeStyle='#f7dea3';c.lineWidth=4;c.setLineDash([7,3]);c.lineDashOffset=-t*15;c.stroke();c.setLineDash([]);c.strokeStyle='#fff3c4';c.lineWidth=2;c.beginPath();c.arc(anchor.x,anchor.y,22+Math.sin(t*5)*2,0,Math.PI*2);c.stroke();A.rect(c,anchor.x-7,anchor.y-7,14,14,'#eed2a0');A.rect(c,anchor.x-4,anchor.y-9,8,18,'#fff0be');c.restore();label(c,anchor.x,anchor.y-27,`回到线头 · ${Math.ceil(line.life)}s`);}
+  for(const e of g.enemies){if(e.stun>0)label(c,e.x,e.y-40,'✦ 晕','#efe1a5');else if(e.armored){c.save();c.strokeStyle='#afcfdf';c.lineWidth=2;c.strokeRect(e.x-e.radius-3,e.y-e.radius-9,e.radius*2+6,e.radius*2+10);c.restore();label(c,e.x,e.y-e.radius-16,e.kind==='boss'?'护甲 · 结界可破盾':'护甲','#bfdbe4');}else if(e.elite)label(c,e.x,e.y-34,'精英','#f0b3a2');}
+  for(const hit of g.impacts){c.save();const fade=hit.life/hit.maxLife,size=(hit.heavy?18:11)*(1.4-fade*.5);c.globalAlpha=fade;c.translate(hit.x,hit.y);c.rotate(hit.angle);const color=hit.armored?'#c7e7f1':'#fff0bc';A.rect(c,-size,-2,size*2,4,color);A.rect(c,-2,-size,4,size*2,color);A.rect(c,-4,-4,8,8,'#fffbed');c.restore();}
+  for(const e of g.enemies)if(e.hitSlow>0&&e.stun<=0){c.save();c.strokeStyle='#a8d3e2';c.lineWidth=2;c.setLineDash([3,4]);c.beginPath();c.ellipse(e.x,e.y+e.radius,Math.max(13,e.radius),5,0,0,Math.PI*2);c.stroke();c.restore();}
+ }
+ function navigation(c,g,camera,width,height){
+  if(g.state==='lobby')return;
+  const targets=[{...g.camp,name:g.camp.underAttack?'营地告急':'营地',color:g.camp.underAttack?'#f3ab95':'#f0d2a0'}];
+  if(!g.kitten.saved&&!g.kitten.following){if(g.kitten.found)targets.push({...g.kitten,name:'小猫',color:'#e7c4d1'});else{const site=g.searchSites.filter(v=>!v.searched).sort((a,b)=>Math.hypot(a.x-g.player.x,a.y-g.player.y)-Math.hypot(b.x-g.player.x,b.y-g.player.y))[0];if(site)targets.push({...site,name:'搜索区',color:'#dce6bb'});}}
+  for(const target of targets){const tx=target.x-camera.x,ty=target.y-camera.y;if(tx>30&&tx<width-30&&ty>85&&ty<height-50)continue;const dx=tx-width/2,dy=ty-height/2,scale=Math.min((width/2-32)/Math.max(1,Math.abs(dx)),(height/2-105)/Math.max(1,Math.abs(dy)));const x=width/2+dx*scale,y=height/2+dy*scale;c.save();c.translate(x,y);c.rotate(Math.atan2(dy,dx));c.fillStyle=target.color;c.beginPath();c.moveTo(10,0);c.lineTo(-7,-7);c.lineTo(-7,7);c.closePath();c.fill();c.restore();label(c,x,y+24,target.name,target.color);}
+ }
+ function minimap(canvas,g,camera,viewWidth,viewHeight){
+  const c=canvas.getContext('2d'),w=canvas.width,h=canvas.height,world=CatSurvival.WORLD,sx=w/world.width,sy=h/world.height;c.clearRect(0,0,w,h);A.rect(c,0,0,w,h,'#203d35');
+  c.strokeStyle='#91a78a22';c.lineWidth=1;for(let x=0;x<w;x+=w/8){c.beginPath();c.moveTo(x,0);c.lineTo(x,h);c.stroke();}for(let y=0;y<h;y+=h/5){c.beginPath();c.moveTo(0,y);c.lineTo(w,y);c.stroke();}
+  const dot=(p,color,size=4)=>A.rect(c,p.x*sx-size/2,p.y*sy-size/2,size,size,color);
+  if(!g.kitten.found)for(const site of g.searchSites)if(!site.searched){c.strokeStyle='#e5c792';c.strokeRect(site.x*sx-4,site.y*sy-4,8,8);}
+  if(g.kitten.found&&!g.kitten.saved)dot(g.kitten,'#efbfce',6);
+  for(const e of g.enemies)if(Math.hypot(e.x-g.camp.x,e.y-g.camp.y)<240||Math.hypot(e.x-g.player.x,e.y-g.player.y)<260)dot(e,'#e6a18e',3);
+  c.strokeStyle='#cedfbd66';c.strokeRect(camera.x*sx,camera.y*sy,viewWidth*sx,viewHeight*sy);dot(g.camp,g.camp.underAttack?'#f08e76':'#ecd39b',8);dot(g.player,'#e6f3d5',5);
+ }
+ window.AdventureArt={under,over,navigation,minimap};
+})();
+
+</script><script>
+/* Local Web Audio sound palette. No files, network, timers or autoplay required. */
+(function(root){
+  'use strict';
+  class GameAudio{
+    constructor(){
+      let saved={};try{const value=JSON.parse(localStorage.getItem('cat-survival-audio-v1')||'{}');if(value&&typeof value==='object')saved=value;}catch{}
+      this.enabled=typeof saved.enabled==='boolean'?saved.enabled:true;
+      this.volume=Number.isFinite(saved.volume)?Math.max(0,Math.min(1,saved.volume)):.45;
+      this.paused=false;this.context=null;this.voices=new Set();this.last=new Map();this.stats={played:{},limited:0,unavailable:false};
+    }
+    save(){try{localStorage.setItem('cat-survival-audio-v1',JSON.stringify({enabled:this.enabled,volume:this.volume}));}catch{}}
+    unlock(){
+      if(!this.enabled)return Promise.resolve(false);
+      try{
+        if(!this.context){
+          const AudioContext=root.AudioContext||root.webkitAudioContext;if(!AudioContext){this.stats.unavailable=true;return Promise.resolve(false);}
+          this.context=new AudioContext();this.master=this.context.createGain();this.compressor=this.context.createDynamicsCompressor();this.analyser=this.context.createAnalyser();
+          this.compressor.threshold.value=-18;this.compressor.knee.value=18;this.compressor.ratio.value=5;this.compressor.attack.value=.003;this.compressor.release.value=.15;this.analyser.fftSize=1024;
+          this.master.connect(this.compressor);this.compressor.connect(this.analyser);this.analyser.connect(this.context.destination);
+          this.noiseBuffer=this.context.createBuffer(1,this.context.sampleRate,this.context.sampleRate);const data=this.noiseBuffer.getChannelData(0);for(let i=0;i<data.length;i++)data[i]=Math.random()*2-1;
+          this.syncGain();
+        }
+        return this.context.resume().then(()=>true).catch(()=>{this.stats.unavailable=true;return false;});
+      }catch{this.stats.unavailable=true;return Promise.resolve(false);}
+    }
+    syncGain(){if(!this.context)return;const now=this.context.currentTime;this.master.gain.cancelScheduledValues(now);this.master.gain.setTargetAtTime(this.enabled&&!this.paused?this.volume:0,now,.012);}
+    stopVoices(){for(const voice of [...this.voices]){try{voice.node.stop();}catch{}voice.dispose();}}
+    setEnabled(value){this.enabled=!!value;if(!this.enabled)this.stopVoices();this.syncGain();this.save();}
+    setVolume(value){this.volume=Math.max(0,Math.min(1,Number(value)||0));if(!this.volume)this.stopVoices();this.syncGain();this.save();}
+    setPaused(value){this.paused=!!value;if(this.paused)this.stopVoices();this.syncGain();}
+    voice({freq=440,end=freq,duration=.12,type='triangle',gain=.12,delay=0,noise=false,cutoff=1800}){
+      if(!this.context||this.voices.size>=28)return;
+      const ctx=this.context,start=ctx.currentTime+delay,node=noise?ctx.createBufferSource():ctx.createOscillator(),volume=ctx.createGain();let filter=null;
+      if(noise){node.buffer=this.noiseBuffer;filter=ctx.createBiquadFilter();filter.type='lowpass';filter.frequency.setValueAtTime(cutoff,start);node.connect(filter);filter.connect(volume);}
+      else{node.type=type;node.frequency.setValueAtTime(Math.max(20,freq),start);node.frequency.exponentialRampToValueAtTime(Math.max(20,end),start+duration*.8);node.connect(volume);}
+      volume.gain.setValueAtTime(.0001,start);volume.gain.exponentialRampToValueAtTime(Math.max(.001,gain),start+.007);volume.gain.exponentialRampToValueAtTime(.0001,start+duration);volume.connect(this.master);
+      const voice={node,dispose:()=>{if(!this.voices.delete(voice))return;node.disconnect();volume.disconnect();filter?.disconnect();}};
+      this.voices.add(voice);node.onended=voice.dispose;node.start(start);node.stop(start+duration+.02);
+    }
+    melody(notes,step=.09,gain=.11){notes.forEach((freq,i)=>this.voice({freq,duration:.2,gain,delay:i*step,type:'triangle'}));}
+    play(name,detail={}){
+      if(!this.enabled||!this.volume||this.paused||!this.context||this.context.state!=='running')return false;
+      const intervals={attack:.12,hit:.07,armor:.09,defeat:.1,pickup:.08,wood:.12,campHit:.4,hazard:1,ui:.1};
+      const now=this.context.currentTime;if(now-(this.last.get(name)??-Infinity)<(intervals[name]??.12)){this.stats.limited++;return false;}
+      // Camp emergencies and results must remain audible during dense combat.
+      if(['campAlarm','helperFallen','win','lose'].includes(name)&&this.voices.size>=18)this.stopVoices();
+      if(this.voices.size>=24){this.stats.limited++;return false;}
+      this.last.set(name,now);this.stats.played[name]=(this.stats.played[name]||0)+1;
+      switch(name){
+        case 'ui':this.voice({freq:620,end:850,duration:.08,gain:.075});break;
+        case 'attack':this.voice({freq:520,end:290,duration:.065,gain:.05});this.voice({noise:true,cutoff:2100,duration:.045,gain:.025});break;
+        case 'hit':this.voice({freq:detail.heavy?160:235,end:65,duration:detail.heavy?.18:.11,gain:detail.heavy?.19:.13});this.voice({noise:true,cutoff:1300,duration:.075,gain:.11});break;
+        case 'armor':this.voice({freq:1250,end:810,type:'sine',duration:.13,gain:.09});this.voice({freq:1810,end:1310,type:'triangle',duration:.075,gain:.035});break;
+        case 'defeat':this.voice({freq:440,end:90,duration:.18,gain:.11});this.voice({noise:true,cutoff:900,duration:.09,gain:.07});break;
+        case 'dash':this.voice({noise:true,cutoff:2600,duration:.19,gain:.1});this.voice({freq:320,end:90,duration:.16,gain:.055});break;
+        case 'weave':this.melody([392,523,659],.055,.075);break;
+        case 'loop':this.voice({noise:true,cutoff:1700,duration:.2,gain:.09});this.melody([523,659,784,1046],.065,.115);break;
+        case 'yarnMiss':this.melody([392,294],.09,.07);break;
+        case 'skill':
+          if(detail.cat==='white')this.melody([659,784,988,1318],.085,.11);
+          else if(detail.cat==='black'){this.voice({noise:true,cutoff:2400,duration:.35,gain:.12});this.voice({freq:640,end:160,type:'sine',duration:.3,gain:.1});}
+          else{this.voice({freq:170,end:55,duration:.35,gain:.2});this.voice({noise:true,cutoff:650,duration:.24,gain:.2});this.voice({freq:330,end:150,duration:.19,delay:.04,gain:.075});}
+          break;
+        case 'pickup':this.voice({freq:detail.kind==='heart'?880:1046,end:detail.kind==='heart'?1174:1396,duration:.12,gain:.065,type:'sine'});break;
+        case 'wood':this.voice({noise:true,cutoff:850,duration:.045,gain:.13});this.voice({freq:340,end:170,duration:.06,gain:.075,delay:.055});break;
+        case 'build':for(let i=0;i<3;i++){this.voice({noise:true,cutoff:1100,duration:.06,gain:.13,delay:i*.09});this.voice({freq:180+i*80,end:100+i*40,duration:.09,gain:.085,delay:i*.09});}break;
+        case 'repair':this.melody([330,440,523],.075,.085);break;
+        case 'kittenFound':this.melody([659,784,1046],.1,.12);break;
+        case 'searchEmpty':this.melody([392,330],.1,.06);break;
+        case 'campAlarm':this.melody([659,440,659],.17,.12);break;
+        case 'helperFallen':this.melody([440,349,262,196],.2,.12);break;
+        case 'rescueStart':this.voice({freq:550,end:890,duration:.18,gain:.1});this.voice({freq:890,end:520,duration:.23,delay:.16,gain:.075});break;
+        case 'rescued':this.melody([523,659,784,1046],.12,.12);break;
+        case 'day':this.melody([392,523,659],.13,.09);break;
+        case 'night':this.voice({freq:262,end:247,type:'sine',duration:.5,gain:.115});this.voice({freq:196,end:185,type:'sine',duration:.55,delay:.25,gain:.09});break;
+        case 'breather':this.melody([440,523],.17,.055);break;
+        case 'hazard':this.voice({freq:740,duration:.09,gain:.08});this.voice({freq:740,duration:.09,gain:.08,delay:.17});break;
+        case 'boss':this.voice({freq:98,end:73,type:'triangle',duration:.7,gain:.18});this.voice({freq:147,end:110,type:'sine',duration:.6,delay:.16,gain:.1});break;
+        case 'campHit':this.voice({noise:true,cutoff:550,duration:.14,gain:.18});this.voice({freq:140,end:62,duration:.2,gain:.13});break;
+        case 'hurt':this.voice({noise:true,cutoff:900,duration:.12,gain:.12});this.voice({freq:225,end:95,duration:.22,gain:.15});break;
+        case 'cache':this.melody([440,554,659],.08,.075);break;
+        case 'risk':this.melody([440,415,294],.12,.09);break;
+        case 'level':case 'upgrade':case 'revive':this.melody([523,659,784,1046],.075,.115);break;
+        case 'win':this.melody([523,659,784,659,1046],.13,.14);break;
+        case 'lose':this.melody([392,330,262],.18,.09);break;
+        default:return false;
+      }
+      return true;
+    }
+    event(e){
+      if(['start','resume','home'].includes(e.type))this.setPaused(false);
+      if(e.type==='pause'){this.setPaused(true);return;}
+      const name=e.type==='hit'?(e.armored?'armor':'hit'):e.type==='stage'?'day':e.type==='finish'?(e.won?'win':'lose'):e.type==='cacheChosen'?(e.choice==='risk'?'risk':'pickup'):e.type==='bossDefeated'?'rescued':e.type;
+      const supported=new Set(['kittenFound','searchEmpty','campAlarm','helperFallen','attack','hit','armor','defeat','dash','weave','loop','yarnMiss','skill','pickup','wood','build','repair','rescueStart','rescued','day','night','breather','hazard','boss','campHit','hurt','cache','risk','level','upgrade','revive','win','lose']);
+      if(supported.has(name))this.play(name,e);
+    }
+  }
+  root.GameAudio=GameAudio;
+})(window);
+
+</script><script>
+(function(){
+  'use strict';
+  const {Game,CATS,STAGES,UPGRADES,BUILDS,PACE,WORLD}=CatSurvival,art=PixelArt,$=id=>document.getElementById(id);
+  const canvas=$('gameCanvas'),ctx=canvas.getContext('2d'),overlay=$('gameOverlay'),dialog=$('infoDialog');
+  const isTouch=window.matchMedia('(pointer: coarse)').matches||navigator.maxTouchPoints>0;
+  const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.body.classList.toggle('is-touch',isTouch);
+  const keys=new Set();let stick={x:0,y:0},pointerId=null,mapStage=0,map=null,cameraX=0,cameraY=0,lastFrame=0,hudTick=0,toastUntil=0,selected='orange',resumeAfterDialog=false;
+  const sfx=new GameAudio();let storageAvailable=true;
+  const STORAGE_KEY='cat-survival-records-v22';
+  function readRecords(){try{const value=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');return Array.isArray(value)?value.filter(r=>r&&CATS[r.cat]&&Number.isFinite(r.score)&&Number.isFinite(r.time)&&Number.isFinite(r.kills)&&Number.isFinite(r.fish)&&[1,2,3].includes(r.stage)&&typeof r.won==='boolean'&&typeof r.date==='string').slice(0,12):[];}catch{storageAvailable=false;return[];}}
+  let records=readRecords();
+  function recordRun(e){const r={cat:e.cat,score:e.score,fish:e.fish,kills:e.kills,stage:e.stage,time:Math.round(e.time),won:e.won,rescued:e.rescued||0,loops:e.loops||0,stars:e.stars||0,survivors:e.survivors||0,fallen:e.fallen||0,date:new Date().toLocaleDateString('zh-CN')};records.unshift(r);records=records.slice(0,12);try{localStorage.setItem(STORAGE_KEY,JSON.stringify(records));}catch{storageAvailable=false;}updateBest();}
+  function updateBest(){const best=records.reduce((a,b)=>Math.max(a,b.score),0);$('bestRecord').textContent=records.length?`${storageAvailable?'本地最佳':'本次最佳'} ${best} 分　/　已完成 ${records.filter(r=>r.won).length} 次冒险`:'还没有脚印，去留下第一段冒险吧。';}
+  function updateSound(){const enabled=sfx.enabled;$('soundButton').setAttribute('aria-pressed',String(enabled));$('soundButton').setAttribute('aria-label',enabled?'关闭音效':'开启音效');$('soundButton').querySelector('span').textContent=enabled?'音效开':'音效关';$('soundButton').querySelector('path').setAttribute('d',enabled?'M11 5 6 9H3v6h3l5 4zM16 8c3 2 3 6 0 8m3-11c5 4 5 10 0 14':'M11 5 6 9H3v6h3l5 4zM16 9l5 6m0-6-5 6');$('volumeSlider').value=Math.round(sfx.volume*100);$('volumeValue').textContent=`${Math.round(sfx.volume*100)}%`;}
+  const game=new Game({onEvent:onGameEvent});
+  // The same engine instance drives the visible game and browser verification.
+  window.catDemo={game,audio:sfx,version:'2.2.0',camera:{x:0,y:0}};
+  function clearInput(){keys.clear();stick={x:0,y:0};pointerId=null;$('joystickKnob').style.transform='';}
+  function toast(message,seconds=2.5){$('stageToast').textContent=message;$('stageToast').classList.add('visible');toastUntil=performance.now()+seconds*1000;}
+  function closeOverlay(){overlay.hidden=true;overlay.innerHTML='';}
+  function showOverlay(content,label){clearInput();overlay.innerHTML=`<div class="overlay-card" role="dialog" aria-modal="true" aria-label="${label}">${content}</div>`;overlay.hidden=false;requestAnimationFrame(()=>overlay.querySelector('button')?.focus({preventScroll:true}));}
+  function onGameEvent(e){
+    sfx.event(e);
+    if(e.type==='start'){document.body.classList.add('in-run');$('adventureSidebar').hidden=false;$('companionTitle').textContent='和伙伴一起守夜';closeOverlay();$('lobbyPanel').hidden=true;$('gameViewport').classList.add('playing');document.querySelectorAll('[data-select]').forEach(b=>b.disabled=true);$('selectionNote').textContent='伙伴会拦怪，但会受伤牺牲。看到营地警报请及时回防。';$('pauseButton').disabled=false;$('touchControls').hidden=!isTouch;clearInput();canvas.focus({preventScroll:true});}
+    if(e.type==='stage'){mapStage=0;closeOverlay();updateRoute();toast(`第 ${e.stage} 夜 · 前往${game.searchRegion}搜索，${PACE.day} 秒后入夜。`,3);canvas.focus({preventScroll:true});}
+    if(e.type==='pause'){showOverlay('<p class="overlay-icon">Ⅱ</p><h2>在这里歇歇脚。</h2><p>森林会等你。准备好了，就继续出发。</p><div class="overlay-actions"><button class="primary-button" data-action="resume">继续冒险</button><button class="secondary-button" data-action="quit">结束本局</button></div>','游戏已暂停');$('pauseButton').setAttribute('aria-label','继续游戏');}
+    if(e.type==='resume'){closeOverlay();clearInput();$('pauseButton').setAttribute('aria-label','暂停游戏');canvas.focus({preventScroll:true});}
+    if(e.type==='upgrade'){showOverlay(`<p class="overlay-icon">✦</p><h2>这一站，顺利通过！</h2><p>存活伙伴恢复 20 生命，牺牲无法挽回。选一项能力再出发。</p><div class="upgrade-options">${game.offeredUpgrades.map(u=>`<button class="upgrade-option" data-upgrade="${u.id}"><span>${u.icon}</span><b>${u.name}</b><small>${u.description}</small></button>`).join('')}</div>`,'选择通关强化');}
+    if(e.type==='level'){toast(`升级啦！Lv. ${e.level}　攻击 +3，生命恢复 8`);}
+    if(e.type==='boss'){toast('森林守卫来了！用毛线围住它，可以眩晕打断攻击。',4);}
+    if(e.type==='bossDefeated')toast('守卫睡着了！带齐伙伴，一起等到天亮。',3);
+    if(e.type==='finish'){
+      recordRun(e);clearInput();$('pauseButton').disabled=true;$('touchControls').hidden=true;updateRoute();
+      const stars='★'.repeat(e.stars)+'☆'.repeat(3-e.stars);
+      showOverlay(`<p class="result-stars" aria-label="${e.stars} 星通关">${stars}</p><h2>${e.won?(e.stars===3?'全员归来，三星通关！':'守住了家，也记住了它们。'):'营地需要你，再试一次。'}</h2><p>${e.won?(e.fallen?`成功守过三夜，${e.survivors} 位伙伴存活，${e.fallen} 位在防守中牺牲。下次争取全员生还。`:'三位伙伴全部生还，营地核心平安。'):e.reason||'换个路线，再试一次吧。'}</p><div class="result-stats"><div><b>${e.score}</b>冒险得分</div><div><b>${e.survivors} / ${e.rescued}</b>存活 / 救回</div><div><b>${e.fallen}</b>牺牲伙伴</div></div><p class="rating-rule">三星：3 位全员生还 · 两星：1–2 位生还 · 一星：仅守住营地</p><div class="overlay-actions"><button class="primary-button" data-action="retry">再冒险一次</button><button class="secondary-button" data-action="home">换一只猫咪</button></div>`,e.won?'冒险通关':'本局结束');
+    }
+    if(e.type==='home'){document.body.classList.remove('in-run');$('adventureSidebar').hidden=true;$('companionTitle').textContent='选择你的伙伴';closeOverlay();$('lobbyPanel').hidden=false;$('gameViewport').classList.remove('playing');$('touchControls').hidden=true;$('pauseButton').disabled=true;document.querySelectorAll('[data-select]').forEach(b=>b.disabled=false);$('selectionNote').textContent='每只猫咪，都有自己的拿手好戏。';mapStage=0;selectCat(selected);updateRoute();$('startButton').focus({preventScroll:true});}
+    const hints={weave:'开始牵线！绕一圈回到金色线头，圈住敌人。',yarnMiss:'毛线松开了。下次画小一点的圈，10 秒内回到线头。',rescueStart:'小猫跟上来了！带它回到篝火旁。',rescued:'伙伴到家！获得 3 木料，它能暂时拦住敌人，请留意它的生命。',kittenFound:'找到小猫了！再按 E 接应，沿营地方向护送回家。',searchEmpty:'这里没有小猫，找到 1 木料。继续查看这个区域的其他藏身点。',night:'夜幕降临！回防营地，蓝框护甲怪要用结界或范围技能破甲。',revive:'第九条命生效！已原地复活，获得 3 秒无敌。',repair:'营地已修复。'};
+    if(hints[e.type])toast(hints[e.type],3.5);
+    if(e.type==='campAlarm')toast(e.breached?'营地正在被拆！立刻回防，清除核心里的怪物。':game.livingHelpers().some(h=>h.blocking)?'营地告急！伙伴正在拦怪，请及时回来支援。':'怪物正接近营地核心，请及时回防拦截。',4);
+    if(e.type==='helperFallen')toast(`一位伙伴在守营中牺牲了。仍可通关，但无法获得满星。`,4);
+    if(e.type==='hint')toast(e.text,3);
+    if(e.type==='breather')toast('敌潮暂歇，可以拾取补给、修复营地。',2.5);
+    if(e.type==='loop'){toast(e.hits?`围猎成功！困住 ${e.hits} 个敌人，留下减速结界。`:'结界已形成！把敌人引进来会减速。',3);}
+    if(e.type==='build')toast(`${BUILDS[e.build].name} ${e.level>1?'升级':'搭建'}完成！`,2);
+    if(e.type==='cache')showOverlay('<p class="overlay-icon">◇</p><h2>宝箱里，藏着一个选择。</h2><p>带走补给，还是冒险唤醒更强的力量？</p><div class="upgrade-options cache-options"><button class="upgrade-option" data-cache="safe"><span>⌂</span><b>稳妥带走</b><small>+4 木料，恢复 15 生命</small></button><button class="upgrade-option" data-cache="risk"><span>ϟ</span><b>唤醒月光</b><small>攻击间隔 −20%，+2 木料<br>立刻引来 3 只精英蝙蝠</small></button></div>','宝箱风险选择');
+    if(e.type==='cacheChosen'){closeOverlay();canvas.focus({preventScroll:true});toast(e.choice==='safe'?'补给收好了，继续探索吧。':'月光已唤醒，精英蝙蝠正在靠近！',3);}
+    if(!['attack','hit','defeat','pickup','wood','campHit'].includes(e.type))refreshHud();
+  }
+  function selectCat(id){if(game.state!=='lobby')return;selected=id;game.select(id);const c=CATS[id];document.querySelectorAll('[data-select]').forEach(b=>{const active=b.dataset.select===id;b.classList.toggle('selected',active);b.setAttribute('aria-pressed',String(active));});$('startButton').querySelector('span').textContent=`带${c.name}出发`;$('abilityName').textContent=c.skill;$('abilityDescription').textContent=c.description;$('abilityIcon').textContent=c.icon;$('skillButtonText').textContent=c.skill;$('hudName').textContent=c.name;art.portrait($('hudPortrait'),id);['statHealth','statSpeed','statAttack'].forEach((key,i)=>{$(key).innerHTML=Array.from({length:5},(_,j)=>`<i class="${j<c.bars[i]?'filled':''}"></i>`).join('');$(key).setAttribute('aria-label',`${c.bars[i]} / 5`);});refreshHud();}
+  function updateRoute(){document.querySelectorAll('[data-stage]').forEach(li=>{const stage=Number(li.dataset.stage);li.classList.toggle('current',stage===game.stage&&game.state!=='won');li.classList.toggle('done',stage<game.stage||game.state==='won');});$('routeLabel').textContent=game.state==='lobby'?'3 个关卡':game.state==='won'?'全部完成':`第 ${game.stage} / 3 关`;}
+  function formatTime(n){n=Math.max(0,Math.ceil(n));return`${String(Math.floor(n/60)).padStart(2,'0')}:${String(n%60).padStart(2,'0')}`;}
+  function refreshHud(){
+    const p=game.player;const stage=STAGES[game.stage-1];$('regionName').textContent=stage.name;$('regionSub').textContent=stage.sub;$('hudLevel').textContent=`Lv. ${p.level}`;$('healthFill').style.width=`${p.hp/p.maxHp*100}%`;$('healthText').textContent=`${Math.ceil(p.hp)} / ${p.maxHp}`;$('healthProgress').setAttribute('aria-valuenow',String(Math.ceil(p.hp)));$('healthProgress').setAttribute('aria-valuemax',String(p.maxHp));$('healthFill').style.background=p.hp/p.maxHp<.3?'#e0a089':'#b6ce80';
+    const overtime=game.stageTime>=PACE.duration;$('timerLabel').textContent=game.state==='lobby'?'白天探索 → 夜晚守家':game.phase==='day'?'☀ 入夜倒计时':'☾ 黎明倒计时';$('timerText').textContent=overtime?(game.kitten.saved?'首领战':'等你接应'):formatTime((game.phase==='day'?PACE.day:PACE.duration)-game.stageTime);$('fishCount').textContent=game.fish;$('xpFill').style.width=`${p.xp/p.nextXp*100}%`;$('skillButton').disabled=game.state!=='playing'||game.skillCd>0;$('skillCooldown').textContent=game.skillCd>0?`${Math.ceil(game.skillCd)}s`:'就绪';$('touchSkill').textContent=game.skillCd>0?`${Math.ceil(game.skillCd)}s`:'技能';$('touchSkill').disabled=game.state!=='playing'||game.skillCd>0;
+    const live=game.state==='playing';$('pauseButton').disabled=!live&&game.state!=='paused';
+    $('woodCount').textContent=game.wood;$('campHpText').textContent=`${Math.ceil(game.camp.hp)} / ${game.camp.maxHp}`;$('campHealthFill').style.width=`${game.camp.hp/game.camp.maxHp*100}%`;$('campProgress').setAttribute('aria-valuenow',Math.ceil(game.camp.hp));
+    $('phaseBadge').textContent=game.phase==='day'?'☀ 白天探索':game.breathing?'☾ 敌潮暂歇':'☾ 夜晚守营';$('phaseBadge').classList.toggle('night',game.phase==='night');$('teamCount').textContent=`救回 ${game.rescued}/3 · 存活 ${game.livingHelpers().length}`;
+    const guarding=game.livingHelpers().some(h=>h.blocking);
+    $('missionText').textContent=game.camp.breached?'营地正在被拆！清除核心中的怪物才能修复。':game.camp.underAttack?(guarding?'伙伴正在拦怪，生命会持续下降，请回营支援。':'怪物靠近营地，请回防拦截。'):!game.kitten.found?`线索：${game.searchRegion}。查看 3 处藏身点，靠近按 E。`:!game.kitten.saved?(game.kitten.following?'小猫在跟随：沿营地箭头护送回家。':'找到小猫了！靠近按 E 接应。'):game.phase==='day'?'伙伴已到家。收集木料布防，注意它们的生命。':'守住核心，让伙伴全部活到天亮。';
+    $('rescueCheck').textContent=game.kitten.saved?'✓ 本轮救援完成，牺牲不撤销救援进度':game.kitten.following?'→ 护送中：返回篝火旁':game.kitten.found?'→ 已找到小猫，靠近按 E 接应':`○ ${game.searchRegion} · 已查看 ${game.searchSites.filter(v=>v.searched).length}/3`;
+    $('searchClue').textContent=game.kitten.saved?'本轮救援完成':game.kitten.following?'护送回营地':game.kitten.found?'小猫已找到':game.searchRegion;
+    $('campDanger').hidden=!live||!game.camp.underAttack;$('campDanger').classList.toggle('breached',game.camp.breached);$('campDanger').textContent=game.camp.breached?`营地被拆中 · ${game.camp.intruders} 只怪物闯入`:guarding?'伙伴正在拦怪 · 请回营支援':'怪物接近核心 · 请回营拦截';
+    $('campStatusNote').textContent=game.camp.breached?'先击退闯入者，才能修复核心。':game.camp.underAttack?(guarding?'伙伴正在用生命拖延，不能一直放任。':'没有伙伴拦住这批怪物，请及时支援。'):'核心被拆毁即失败；每位伙伴最多拦 2 只。';
+    $('campHealthFill').style.background=game.camp.breached?'#e09b85':'#b8c67b';
+    $('guardRoster').innerHTML=game.helpers.length?game.helpers.map(h=>`<div class="guard-row ${h.alive?'':'fallen'}"><span>${CATS[h.type].name}<small>${!h.alive?'已牺牲':h.blocking?`拦住 ${h.blocking} 只`:'待命'}</small></span><div class="guard-meter"><i style="width:${h.hp/h.maxHp*100}%"></i></div><b>${h.alive?Math.ceil(h.hp):'†'}</b></div>`).join(''):'<p class="empty-roster">暂时没有伙伴，请亲自守住核心。</p>';
+    $('starStatus').textContent=`${'★'.repeat(game.fallen?(game.livingHelpers().length?2:1):3)}${'☆'.repeat(game.fallen?(game.livingHelpers().length?1:2):0)} · ${game.fallen?`${game.fallen} 位牺牲，满星已失去`:'全员生还可获三星'}`;
+    const built=game.slots.filter(s=>s.type).length;$('buildCheck').textContent=`${built?'✓':'○'} 营地设施 ${built} / 3 处`;$('nightCheck').textContent=game.phase==='day'?'○ 白天探索，入夜后回防':`→ 守住篝火，还剩 ${Math.max(0,Math.ceil(PACE.duration-game.stageTime))} 秒`;
+    document.querySelectorAll('[data-build]').forEach(b=>{b.classList.toggle('selected',b.dataset.build===game.selectedBuild);b.setAttribute('aria-pressed',b.dataset.build===game.selectedBuild);b.disabled=!live;});
+    $('yarnButton').disabled=!live||game.yarnCd>0;$('dashButton').disabled=!live||game.dashCd>0;$('interactButton').disabled=!live;
+    $('yarnCooldown').textContent=game.yarn?'牵线中':game.yarnCd?`${Math.ceil(game.yarnCd)}s`:'就绪';$('dashCooldown').textContent=game.dashCd?`${Math.ceil(game.dashCd)}s`:'就绪';
+    $('touchYarn').disabled=!live||game.yarnCd>0;$('touchDash').disabled=!live||game.dashCd>0;$('touchInteract').disabled=!live;
+    $('touchYarn').textContent=game.yarn?'回线头':game.yarnCd?`${Math.ceil(game.yarnCd)}s`:'牵线';$('touchDash').textContent=game.dashCd?`${Math.ceil(game.dashCd)}s`:'冲刺';
+    const action=game.interaction();$('interactionPrompt').hidden=!live||!action;$('interactionPrompt').textContent=action?`E · ${action.label}`:'';$('yarnStatus').hidden=!game.yarn;$('yarnStatus').textContent=game.yarn?`回到金色线头围成闭环　${Math.ceil(game.yarn.life)}s`:'';
+    const boss=game.enemies.find(e=>e.kind==='boss');$('bossHud').hidden=!boss;$('gameViewport').classList.toggle('boss-active',Boolean(boss));if(boss){$('bossFill').style.width=`${Math.max(0,boss.hp/boss.maxHp*100)}%`;$('bossHpText').textContent=Math.max(0,Math.ceil(boss.hp));}
+  }
+  function resize(){const r=canvas.getBoundingClientRect();canvas.width=Math.max(320,Math.min(1200,Math.round(600*r.width/r.height)));canvas.height=600;ctx.imageSmoothingEnabled=false;}
+  new ResizeObserver(resize).observe($('gameViewport'));
+  function draw(now){
+    const dt=Math.min((now-lastFrame)/1000||0,.05);lastFrame=now;
+    const input={x:stick.x,y:stick.y};if(keys.has('KeyA')||keys.has('ArrowLeft'))input.x-=1;if(keys.has('KeyD')||keys.has('ArrowRight'))input.x+=1;if(keys.has('KeyW')||keys.has('ArrowUp'))input.y-=1;if(keys.has('KeyS')||keys.has('ArrowDown'))input.y+=1;game.update(dt,input);
+    const p=game.player,preview=game.state==='lobby',t=preview?(reducedMotion?0:now/1000):game.totalTime;
+    const catY=preview&&canvas.width<650?p.y-110:p.y;
+    if(mapStage!==game.stage){map=art.makeMap(game.stage);mapStage=game.stage;}
+    cameraX=Math.max(0,Math.min(WORLD.width-canvas.width,p.x-canvas.width/2));cameraY=Math.max(0,Math.min(WORLD.height-600,p.y-300));window.catDemo.camera={x:cameraX,y:cameraY};
+    ctx.clearRect(0,0,canvas.width,600);ctx.save();ctx.translate(-Math.round(cameraX),-Math.round(cameraY));ctx.drawImage(map,0,0);AdventureArt.under(ctx,game,t);art.fire(ctx,t,game.camp.x,game.camp.y,game.camp.destroyed);
+    // Sparse fireflies sit in the environment instead of obscuring the controls.
+    for(let i=0;i<17;i++){let x=80+(i*137)%1440+Math.sin(t*.3+i)*10,y=120+(i*91)%780+Math.cos(t*.5+i)*7,a=.35+Math.sin(t*1.4+i)*.25;ctx.globalAlpha=a;art.rect(ctx,x-2,y-2,6,6,'#d7e6a0');art.rect(ctx,x,y,2,2,'#ffffc1');}ctx.globalAlpha=1;
+    if(preview){
+      const friends=Object.keys(CATS).filter(id=>id!==selected);
+      art.cat(ctx,game.camp.x+122,game.camp.y+6,friends[0],1.8,0,-1);art.cat(ctx,game.camp.x-87,game.camp.y+33,friends[1],1.8,0,1);
+      ctx.font='12px "Microsoft YaHei",sans-serif';ctx.fillStyle='#d8dec0';ctx.fillText('z',game.camp.x+133,game.camp.y-28);ctx.font='9px sans-serif';ctx.fillText('z',game.camp.x+142,game.camp.y-38);
+      art.ellipse(ctx,p.x,catY+22,30,10,'#e7d48b35');
+      ctx.strokeStyle='#e4d89799';ctx.lineWidth=2;ctx.setLineDash([4,6]);ctx.beginPath();ctx.ellipse(p.x,catY+21,31,12,0,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
+      for(let i=0;i<3;i++)art.fish(ctx,game.camp.x+135+i*24,game.camp.y+38+Math.sin(i)*10,.7);
+    }
+    for(const d of game.drops){const bob=reducedMotion?0:Math.sin(t*4+d.x)*2;art.ellipse(ctx,d.x,d.y+7,8,3,'#2c4c3655');if(d.kind==='heart')art.heart(ctx,d.x,d.y+bob,1.8);else art.fish(ctx,d.x,d.y+bob,.95);}
+    for(const ring of game.rings){const ratio=1-ring.life/ring.maxLife;ctx.globalAlpha=1-ratio;ctx.strokeStyle=ring.color;ctx.lineWidth=4;ctx.beginPath();ctx.arc(ring.x,ring.y,Math.max(3,ring.r*ratio),0,Math.PI*2);ctx.stroke();ctx.globalAlpha=.08*(1-ratio);ctx.fill();ctx.globalAlpha=1;}
+    for(const e of game.enemies){if(e.kind==='boss'&&e.charge>0){ctx.strokeStyle='#efd79a';ctx.lineWidth=3;ctx.setLineDash([6,6]);ctx.beginPath();ctx.arc(e.x,e.y,48+(1-e.charge/PACE.bossCharge)*40,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);}}
+    const characters=[...game.enemies,{kind:'player',y:p.y}].sort((a,b)=>a.y-b.y);
+    for(const entity of characters){if(entity.kind==='player'){if(p.shadow>0){art.cat(ctx,p.x-p.face*18,p.y,selected,2,p.walk,p.face,true);art.cat(ctx,p.x-p.face*34,p.y,selected,2,p.walk,p.face,true);}if(!(p.invuln>0&&Math.floor(t*16)%2===0&&p.shadow<=0))art.cat(ctx,p.x,catY,selected,preview?2.6:2,p.walk,p.face);}else art.enemy(ctx,entity,t);}
+    if(preview){ctx.font='bold 12px "Microsoft YaHei",sans-serif';ctx.textAlign='center';art.rect(ctx,p.x-23,catY-54,46,19,'#233e32dc');ctx.fillStyle='#f4dfab';ctx.fillText(CATS[selected].name,p.x,catY-40);ctx.textAlign='left';}
+    for(const b of game.bullets){art.rect(ctx,b.x-5,b.y-5,10,10,selected==='black'?'#c1dad7':'#f1d3a0');art.rect(ctx,b.x-3,b.y-7,6,14,'#f6dfb3');art.rect(ctx,b.x-4,b.y-1,9,2,'#bca66f');}
+    for(const s of game.enemyShots){art.rect(ctx,s.x-5,s.y-5,10,10,'#daac86');art.rect(ctx,s.x-2,s.y-5,5,4,'#f0d2a0');}
+    for(const v of game.particles){ctx.globalAlpha=Math.min(1,v.life*3);art.rect(ctx,v.x,v.y,3,3,v.color);}ctx.globalAlpha=1;
+    ctx.textAlign='center';ctx.font='bold 12px Consolas,monospace';for(const text of game.texts){ctx.globalAlpha=Math.min(1,text.life*3);ctx.fillStyle='#243c30';ctx.fillText(text.text,text.x+1,text.y+1);ctx.fillStyle=text.color;ctx.fillText(text.text,text.x,text.y);}ctx.globalAlpha=1;ctx.textAlign='left';AdventureArt.over(ctx,game,t,cameraX,canvas.width);ctx.restore();AdventureArt.navigation(ctx,game,{x:cameraX,y:cameraY},canvas.width,600);AdventureArt.minimap($('minimapCanvas'),game,{x:cameraX,y:cameraY},canvas.width,600);
+    hudTick+=dt;if(hudTick>.1){refreshHud();hudTick=0;}if(toastUntil&&now>toastUntil){$('stageToast').classList.remove('visible');toastUntil=0;}requestAnimationFrame(draw);
+  }
+  function activateSkill(){if(game.skill())refreshHud();canvas.focus({preventScroll:true});}
+  document.querySelectorAll('[data-cat]').forEach(c=>art.portrait(c,c.dataset.cat));
+  document.querySelectorAll('[data-select]').forEach(b=>b.addEventListener('click',()=>{selectCat(b.dataset.select);sfx.unlock().then(()=>sfx.play('ui'));}));
+  function startRun(){sfx.unlock().then(()=>{if(game.state==='playing')sfx.play('day');});game.seed=Date.now();game.start(selected);}
+  $('startButton').addEventListener('click',startRun);$('skillButton').addEventListener('click',activateSkill);$('touchSkill').addEventListener('click',activateSkill);
+  for(const id of ['yarnButton','touchYarn'])$(id).addEventListener('click',()=>{game.weave();canvas.focus({preventScroll:true});});
+  for(const id of ['dashButton','touchDash'])$(id).addEventListener('click',()=>{game.dash();canvas.focus({preventScroll:true});});
+  for(const id of ['interactButton','touchInteract'])$(id).addEventListener('click',()=>game.interact());
+  document.querySelectorAll('[data-build]').forEach(b=>b.addEventListener('click',()=>{game.selectBuild(b.dataset.build);canvas.focus({preventScroll:true});}));
+  $('pauseButton').addEventListener('click',()=>game.state==='paused'?game.resume():game.pause());
+  overlay.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const action=b.dataset.action;if(b.dataset.cache){game.chooseCache(b.dataset.cache);return;}if(b.dataset.upgrade){game.chooseUpgrade(b.dataset.upgrade);return;}if(action==='resume')game.resume();if(action==='retry')startRun();if(action==='home')game.home();if(action==='quit'){showOverlay('<p class="overlay-icon">⌂</p><h2>要回营地了吗？</h2><p>本局进度将结束。已经完成的冒险纪录会保留。</p><div class="overlay-actions"><button class="primary-button" data-action="resume">继续冒险</button><button class="secondary-button" data-action="home">返回营地</button></div>','结束本局确认');}});
+  window.addEventListener('keydown',e=>{
+    if(dialog.open)return;
+    if(e.code==='Tab'&&!overlay.hidden){const buttons=[...overlay.querySelectorAll('button')];const first=buttons[0],last=buttons.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}return;}
+    if(['KeyP','Escape'].includes(e.code)){if(!e.repeat&&(game.state==='playing'||game.state==='paused')){e.preventDefault();game.state==='playing'?game.pause():game.resume();}return;}
+    if(game.state!=='playing')return;
+    if(['KeyQ','KeyE','ShiftLeft','ShiftRight','Digit1','Digit2','Digit3'].includes(e.code)){e.preventDefault();if(!e.repeat){if(e.code==='KeyQ')game.weave();else if(e.code==='KeyE')game.interact();else if(e.code.startsWith('Shift'))game.dash();else game.selectBuild(['turret','trap','garden'][Number(e.code.at(-1))-1]);}return;}
+    if(['KeyW','KeyA','KeyS','KeyD','ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].includes(e.code)){e.preventDefault();if(e.code==='Space'){if(!e.repeat)activateSkill();}else keys.add(e.code);}
+  });
+  window.addEventListener('keyup',e=>keys.delete(e.code));
+  window.addEventListener('blur',()=>{clearInput();if(game.state==='playing')game.pause();});document.addEventListener('visibilitychange',()=>{if(document.hidden){clearInput();game.pause();}});
+  $('joystick').addEventListener('pointerdown',e=>{if(game.state!=='playing')return;pointerId=e.pointerId;$('joystick').setPointerCapture(e.pointerId);moveStick(e);});
+  $('joystick').addEventListener('pointermove',e=>{if(e.pointerId===pointerId)moveStick(e);});
+  function moveStick(e){e.preventDefault();const r=$('joystick').getBoundingClientRect(),dx=e.clientX-r.left-r.width/2,dy=e.clientY-r.top-r.height/2,d=Math.hypot(dx,dy),max=r.width*.32,m=Math.max(max,d);stick={x:dx/m,y:dy/m};$('joystickKnob').style.transform=`translate(${dx/m*max}px,${dy/m*max}px)`;}
+  for(const event of ['pointerup','pointercancel','lostpointercapture'])$('joystick').addEventListener(event,()=>{stick={x:0,y:0};pointerId=null;$('joystickKnob').style.transform='';});
+  $('soundButton').addEventListener('click',()=>{sfx.setEnabled(!sfx.enabled);updateSound();if(sfx.enabled)sfx.unlock().then(()=>sfx.play('ui'));});
+  $('volumeSlider').addEventListener('input',e=>{sfx.setVolume(Number(e.target.value)/100);updateSound();});
+  $('volumeSlider').addEventListener('change',()=>{sfx.unlock().then(()=>sfx.play('ui'));});
+  $('fullscreenButton').addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else if($('gameViewport').parentElement.requestFullscreen)await $('gameViewport').parentElement.requestFullscreen();else toast('此浏览器不支持全屏，可以横屏体验。');}catch{toast('未能进入全屏，当前窗口仍可正常游玩。');}});
+  document.addEventListener('fullscreenchange',()=>{$('fullscreenButton').setAttribute('aria-label',document.fullscreenElement?'退出全屏':'游戏全屏');resize();});
+  function openDialog(content){resumeAfterDialog=game.state==='playing';if(resumeAfterDialog)game.pause();$('dialogContent').innerHTML=content;dialog.showModal();}
+  function closeDialog(){dialog.close();}
+  dialog.addEventListener('close',()=>{if(resumeAfterDialog&&game.state==='paused')game.resume();resumeAfterDialog=false;});$('closeDialog').addEventListener('click',closeDialog);dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeDialog();}});
+  $('guideNav').addEventListener('click',()=>openDialog('<h2 id="dialogTitle">走进森林，也要守住家。</h2><p>地图扩大到 1600 × 1000，镜头会跟随小猫。白天 40 秒探索、夜晚 40 秒守营，保持上一版的舒缓节奏。每一轮救回一只猫，第三轮还要击败森林守卫。</p><h3>按线索寻找藏身点</h3><p>任务会提示一个森林区域，小地图的空心方框表示待搜索的藏身点，不会直接显示猫的位置。靠近按 <kbd>E</kbd> 查看，找到猫后再按 E 接应，护送回营地。白点是你、金点是营地、粉点是已找到的猫。</p><h3>营地是唯一的家</h3><p>怪物进入金色核心圈后会持续拆除营地；单只普通怪物无人阻挡时约 10 秒拆毁满耐久核心。核心耐久归零立即失败，设施会被拆除。先清除闯入者才能修复。每位伙伴能拦住最多 2 只怪物，其余敌人可能漏进核心；拦截时持续掉生命，长时间不支援会牺牲。每轮结束存活伙伴恢复 20 生命，牺牲不会复活。</p><h3>生还决定通关星级</h3><p>完成三轮救援并击败守卫仍可通关。3 位伙伴全部生还获得三星；1–2 位生还获得两星；伙伴全部牺牲、但营地守住获得一星。牺牲不会取消已经完成的救援，失败则没有星级。</p><h3>围猎与布防</h3><p><kbd>Q</kbd> 放线，10 秒内移动绕圈回到线头，结界伤害、眩晕并破甲。<kbd>Shift</kbd> 冲刺；<kbd>1 / 2 / 3</kbd> 选择炮台、陷阱、花圃，靠近空地按 E 搭建或升级。靠近受损营地按 E 可用 2 木料修复 45 耐久。</p><h3>操作</h3><p><kbd>WASD / 方向键</kbd> 移动，<kbd>空格</kbd> 猫咪技能，<kbd>P / Esc</kbd> 暂停。手机使用摇杆和四个操作按钮。切换窗口自动暂停。右上角可调整音效。每局约 4 分钟，未完成目标时会延长。</p>'));
+  $('journalNav').addEventListener('click',()=>{
+    const entries=records.map(r=>`<div class="journal-entry"><span>${r.won?'⚑':'✦'}</span><div><b>${CATS[r.cat].name} · ${r.won?`${'★'.repeat(Math.max(0,Math.min(3,Number(r.stars)||0)))} 通关`:`抵达第 ${r.stage} 关`}</b><small>${escapeHtml(r.date)}　${formatTime(r.time)}　${Number(r.survivors)||0} 位生还　${Number(r.fallen)||0} 位牺牲</small></div><span>${Math.round(r.score)} 分</span></div>`).join('');
+    openDialog(`<h2 id="dialogTitle">留在森林里的脚印</h2><p>${records.length?'每一次出发，都值得被记住。':'手记还是空白的。完成一局冒险，第一枚脚印就会留在这里。'}</p>${entries}<p class="save-note">${storageAvailable?'最多保留最近 12 局。纪录仅存于当前浏览器，清理浏览器数据会一并清除。':'浏览器未允许本地存储，纪录暂时保留在本次页面中。'}</p>`);
+  });
+  function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  $('adventureNav').addEventListener('click',()=>{$('gameViewport').scrollIntoView({behavior:reducedMotion?'instant':'smooth',block:'center'});if(game.state==='lobby')$('startButton').focus({preventScroll:true});else canvas.focus({preventScroll:true});});
+  document.querySelector('.brand').addEventListener('click',e=>{e.preventDefault();$('adventureNav').click();});
+  updateSound();selectCat('orange');updateBest();resize();requestAnimationFrame(draw);
+})();
+
+
+</script>
+</body>
+</html>
+
+
